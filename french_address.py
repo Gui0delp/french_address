@@ -237,6 +237,8 @@ class FrenchAddress:
                 tool = PointTool(self.canvas, self.dockwidget)
                 self.iface.mapCanvas().setMapTool(tool)
 
+            items_list = "Item 1", "Item 2", "Item 3"
+            self.dockwidget.lv_address_result.addItems(items_list)
             # connect to provide cleanup on closing of dockwidget
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
