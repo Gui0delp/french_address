@@ -46,7 +46,8 @@ class PointTool(QgsMapTool):
         """Set the latitude and the longitude coordinates"""
         self.longitude = point[0]
         self.latitude = point[1]
-        print(self.latitude, self.longitude)
+        message = "{} | {}".format(str(self.latitude), str(self.longitude))
+        self.dialog.pte_logs_event.appendPlainText(message)
 
     def activate(self):
         pass
