@@ -71,7 +71,6 @@ class FrenchAddress:
         self.toolbar.setObjectName(u'FrenchAddress')
 
         #print "** INITIALIZING FrenchAddress"
-
         self.pluginIsActive = False
         self.dockwidget = None
 
@@ -214,10 +213,14 @@ class FrenchAddress:
         """The function manage the event from the check box"""
         if state == QtCore.Qt.Checked:
             QApplication.setOverrideCursor(Qt.CrossCursor)
+            tool = PointTool(self.canvas, self.dockwidget)
             self.dockwidget.pb_locate_search.setEnabled(False)
         else:
             QApplication.restoreOverrideCursor()
+            tool = self.active_tool
             self.dockwidget.pb_locate_search.setEnabled(True)
+        
+        self.iface.mapCanvas().setMapTool(tool)
 
     def run(self):
         """Run method that loads and starts the plugin"""
@@ -232,12 +235,11 @@ class FrenchAddress:
             #    removed on close (see self.onClosePlugin method)
             if self.dockwidget == None:
                 # Create the dockwidget (after translation) and keep reference
+                self.active_tool = self.iface.mapCanvas().mapTool()
                 self.dockwidget = FrenchAddressDockWidget()
                 self.dockwidget.cb_clic_map.stateChanged.connect(self.click_check_box)
-                tool = PointTool(self.canvas, self.dockwidget)
-                self.iface.mapCanvas().setMapTool(tool)
 
-            items_list = "Item 1", "Item 2", "Item 3"
+            items_list = ["Item 1", "Item 2", "Item 3"]
             self.dockwidget.lv_address_result.addItems(items_list)
             # connect to provide cleanup on closing of dockwidget
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
