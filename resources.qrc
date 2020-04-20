@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/french_address" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>
