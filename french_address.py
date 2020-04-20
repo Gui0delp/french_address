@@ -25,7 +25,6 @@ from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QApplication
 from .modules.point_tool import PointTool
-from qgis.gui import *
 # Initialize Qt resources from file resources.py
 from .resources import *
 
@@ -215,13 +214,12 @@ class FrenchAddress:
         """The function manage the event from the check box"""
         if state == QtCore.Qt.Checked:
             QApplication.setOverrideCursor(Qt.CrossCursor)
-            tool = PointTool(self.canvas, self.dockwidget)
             self.dockwidget.pb_locate_search.setEnabled(False)
         else:
             QApplication.restoreOverrideCursor()
-            tool = QgsMapToolPan(self.canvas)
             self.dockwidget.pb_locate_search.setEnabled(True)
 
+        tool = PointTool(self.canvas, self.dockwidget)
         self.iface.mapCanvas().setMapTool(tool)
 
     def run(self):
