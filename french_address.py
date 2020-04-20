@@ -219,9 +219,6 @@ class FrenchAddress:
             QApplication.restoreOverrideCursor()
             self.dockwidget.pb_locate_search.setEnabled(True)
 
-        tool = PointTool(self.canvas, self.dockwidget)
-        self.iface.mapCanvas().setMapTool(tool)
-
     def run(self):
         """Run method that loads and starts the plugin"""
 
@@ -237,6 +234,8 @@ class FrenchAddress:
                 # Create the dockwidget (after translation) and keep reference
                 self.dockwidget = FrenchAddressDockWidget()
                 self.dockwidget.cb_clic_map.stateChanged.connect(self.click_check_box)
+                tool = PointTool(self.canvas, self.dockwidget)
+                self.iface.mapCanvas().setMapTool(tool)
 
             # connect to provide cleanup on closing of dockwidget
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
