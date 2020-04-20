@@ -12,8 +12,8 @@ email=delpro.guillaume@gmail.com
 
 about=Le plugin utilise l'API fourni par le gouvernement français (url : https://geo.api.gouv.fr/adresse). Le but de ce plugin est de rechercher ou localiser les adresses sur le territoire français. Pour rechercher, c'est simple, il suffit d'écrire l'adresse voulue dans la barre de recherche. Pour un meilleur résultat, essayez de mentionner un numéro un nom de voie ainsi que le code postal. Vous pouvez aussi en cliquant sur le canevas récupérer l'adresse selon les coordonnées.
 
-tracker=http://bugs
-repository=http://repo
+tracker=https://github.com/Gui0delp/french_address/issues
+repository=https://github.com/Gui0delp/french_address
 # End of mandatory metadata
 
 # Recommended items:
@@ -25,7 +25,7 @@ hasProcessingProvider=no
 # Tags are comma separated with spaces allowed
 tags=python, webservice, adresse, addresse, api, gouvernement, france, french
 
-homepage=http://homepage
+homepage=https://github.com/Gui0delp/french_address
 category=Plugins
 icon=icon.png
 # experimental flag
