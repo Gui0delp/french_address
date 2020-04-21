@@ -8,8 +8,6 @@ class PointTool(QgsMapTool):
         QgsMapTool.__init__(self, canvas)
         self.canvas = canvas
         self.dialog = dialog
-        self.latitude = 0.0
-        self.longitude = 0.0
         self.coord = Coordinates(self.dialog)
 
     def canvasReleaseEvent(self, event):
