@@ -1,9 +1,5 @@
 from qgis.gui import QgsMapTool
-from qgis.core import (
-    QgsCoordinateReferenceSystem,
-    QgsCoordinateTransform,
-    QgsProject,
-)
+
 from .coordinates import Coordinates
 class PointTool(QgsMapTool):
     """Point tool"""
