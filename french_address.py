@@ -27,6 +27,7 @@ from qgis.PyQt.QtWidgets import QAction, QApplication
 from PyQt5.QtCore import QTime
 from .modules.point_tool import PointTool
 from .modules.coordinates import Coordinates
+from .modules.message_handler import MessageHandler
 from .resources import *
 
 from .french_address_dockwidget import FrenchAddressDockWidget
@@ -177,24 +178,6 @@ class FrenchAddress:
         self.dockwidget.lv_address_result.clear()
         self.dockwidget.pte_logs_event.clear()
 
-    def send_logs_messages(self, message_type, message):
-        """Send messages to the logs"""
-
-        time = self.set_current_time()
-
-        if message_type == 'ok':
-            logs_message = "{} | {} : {}".format(time, 'OK', message)
-        elif message_type == 'error':
-            logs_message = "{} | {} : {}".format(time, 'ERROR', message)
-        else:
-            logs_message = "{} | {} : {}".format(time, 'Info', message)
-
-        return self.dockwidget.pte_logs_event.appendPlainText(logs_message)
-
-    def set_current_time(self):
-        """Set current time"""
-        return QTime.currentTime().toString(Qt.ISODate)
-
     def click_check_box(self, state):
         """The function manage the event from the check box"""
 
@@ -218,11 +201,12 @@ class FrenchAddress:
                 self.active_tool = self.iface.mapCanvas().mapTool()
                 self.dockwidget = FrenchAddressDockWidget()
                 self.coord = Coordinates(self.dockwidget)
+                self.handler_message = MessageHandler(self.dockwidget)
                 self.dockwidget.cb_clic_map.stateChanged.connect(self.click_check_box)
 
             self.clear()
-            self.send_logs_messages('ok', 'Plugin is ready to be used ! \
-            \n------------------------------------------')
+            self.handler_message.send_logs_messages('ok', 'Le plugin est prêt à être utilisé \
+            \n--------------------------------------------------')
 
             items_list = ["Item 1", "Item 2", "Item 3"]
             self.dockwidget.lv_address_result.addItems(items_list)
