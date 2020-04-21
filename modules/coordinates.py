@@ -14,6 +14,7 @@ class Coordinates:
         self.dialog = dialog
         self.longitude = 0.0
         self.latitude = 0.0
+        self.point_wgs84 = []
         self.project_canvas = ""
         self.destinatio_crs = ""
         self.x_transform = ""
@@ -36,9 +37,12 @@ class Coordinates:
             QgsProject.instance())
         return self.x_transform
 
-    def set_latitude_longitude_wgs84(self, point):
+    def set_latitude_longitude_wgs84(self):
         """Set the latitude and the longitude coordinates"""
-        self.longitude = point[0]
-        self.latitude = point[1]
-        message = "{} | {}".format(str(self.latitude), str(self.longitude))
-        self.dialog.pte_logs_event.appendPlainText(message)
+        self.longitude = self.point_wgs84[0]
+        self.latitude = self.point_wgs84[1]
+
+    def set_point_to_wgs84(self, point):
+        """Transform the crs point to the wgs84 crs"""
+        self.point_wgs84 = self.x_transform.transform(point)
+        return self.point_wgs84
