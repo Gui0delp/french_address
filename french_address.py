@@ -16,7 +16,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
@@ -25,10 +25,8 @@ from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QApplication
 from .modules.point_tool import PointTool
-# Initialize Qt resources from file resources.py
 from .resources import *
 
-# Import the code for the DockWidget
 from .french_address_dockwidget import FrenchAddressDockWidget
 import os.path
 
@@ -102,44 +100,7 @@ class FrenchAddress:
         status_tip=None,
         whats_this=None,
         parent=None):
-        """Add a toolbar icon to the toolbar.
-
-        :param icon_path: Path to the icon for this action. Can be a resource
-            path (e.g. ':/plugins/foo/bar.png') or a normal file system path.
-        :type icon_path: str
-
-        :param text: Text that should be shown in menu items for this action.
-        :type text: str
-
-        :param callback: Function to be called when the action is triggered.
-        :type callback: function
-
-        :param enabled_flag: A flag indicating if the action should be enabled
-            by default. Defaults to True.
-        :type enabled_flag: bool
-
-        :param add_to_menu: Flag indicating whether the action should also
-            be added to the menu. Defaults to True.
-        :type add_to_menu: bool
-
-        :param add_to_toolbar: Flag indicating whether the action should also
-            be added to the toolbar. Defaults to True.
-        :type add_to_toolbar: bool
-
-        :param status_tip: Optional text to show in a popup when mouse pointer
-            hovers over the action.
-        :type status_tip: str
-
-        :param parent: Parent widget for the new action. Defaults None.
-        :type parent: QWidget
-
-        :param whats_this: Optional text to show in the status bar when the
-            mouse pointer hovers over the action.
-
-        :returns: The action that was created. Note that the action is also
-            added to self.actions list.
-        :rtype: QAction
-        """
+        """Add a toolbar icon to the toolbar."""
 
         icon = QIcon(icon_path)
         action = QAction(icon, text, parent)
@@ -180,8 +141,6 @@ class FrenchAddress:
     def onClosePlugin(self):
         """Cleanup necessary items here when plugin dockwidget is closed"""
 
-        #print "** CLOSING FrenchAddress"
-
         # disconnects
         self.dockwidget.closingPlugin.disconnect(self.onClosePlugin)
         QApplication.restoreOverrideCursor()
@@ -199,7 +158,6 @@ class FrenchAddress:
         """Removes the plugin menu item and icon from QGIS GUI."""
 
         #print "** UNLOAD FrenchAddress"
-
         for action in self.actions:
             self.iface.removePluginMenu(
                 self.tr(u'&Adresse France'),
@@ -212,6 +170,7 @@ class FrenchAddress:
 
     def click_check_box(self, state):
         """The function manage the event from the check box"""
+
         if state == QtCore.Qt.Checked:
             QApplication.setOverrideCursor(Qt.CrossCursor)
             tool = PointTool(self.canvas, self.dockwidget)
@@ -220,7 +179,7 @@ class FrenchAddress:
             QApplication.restoreOverrideCursor()
             tool = self.active_tool
             self.dockwidget.pb_locate_search.setEnabled(True)
-        
+
         self.iface.mapCanvas().setMapTool(tool)
 
     def run(self):
@@ -229,11 +188,6 @@ class FrenchAddress:
         if not self.pluginIsActive:
             self.pluginIsActive = True
 
-            #print "** STARTING FrenchAddress"
-
-            # dockwidget may not exist if:
-            #    first run of plugin
-            #    removed on close (see self.onClosePlugin method)
             if self.dockwidget == None:
                 # Create the dockwidget (after translation) and keep reference
                 self.active_tool = self.iface.mapCanvas().mapTool()
@@ -242,7 +196,6 @@ class FrenchAddress:
 
             items_list = ["Item 1", "Item 2", "Item 3"]
             self.dockwidget.lv_address_result.addItems(items_list)
-            # connect to provide cleanup on closing of dockwidget
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
             # show the dockwidget
