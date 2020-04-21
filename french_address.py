@@ -184,6 +184,7 @@ class FrenchAddress:
 
         # disconnects
         self.dockwidget.closingPlugin.disconnect(self.onClosePlugin)
+        QApplication.restoreOverrideCursor()
 
         # remove this statement if dockwidget is to remain
         # for reuse if plugin is reopened
