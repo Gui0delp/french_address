@@ -24,7 +24,9 @@
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QApplication
+from PyQt5.QtCore import QTime
 from .modules.point_tool import PointTool
+from .modules.coordinates import Coordinates
 from .resources import *
 
 from .french_address_dockwidget import FrenchAddressDockWidget
@@ -168,6 +170,31 @@ class FrenchAddress:
 
     #--------------------------------------------------------------------------
 
+    def clear(self):
+        """Permit to clean the differents items from the GUI"""
+
+        self.dockwidget.le_input_address.clear()
+        self.dockwidget.lv_address_result.clear()
+        self.dockwidget.pte_logs_event.clear()
+
+    def send_logs_messages(self, message_type, message):
+        """Send messages to the logs"""
+
+        time = self.set_current_time()
+
+        if message_type == 'ok':
+            logs_message = "{} | {} : {}".format(time, 'OK', message)
+        elif message_type == 'error':
+            logs_message = "{} | {} : {}".format(time, 'ERROR', message)
+        else:
+            logs_message = "{} | {} : {}".format(time, 'Info', message)
+
+        return self.dockwidget.pte_logs_event.appendPlainText(logs_message)
+
+    def set_current_time(self):
+        """Set current time"""
+        return QTime.currentTime().toString(Qt.ISODate)
+
     def click_check_box(self, state):
         """The function manage the event from the check box"""
 
@@ -187,18 +214,20 @@ class FrenchAddress:
 
         if not self.pluginIsActive:
             self.pluginIsActive = True
-
             if self.dockwidget == None:
-                # Create the dockwidget (after translation) and keep reference
                 self.active_tool = self.iface.mapCanvas().mapTool()
                 self.dockwidget = FrenchAddressDockWidget()
+                self.coord = Coordinates(self.dockwidget)
                 self.dockwidget.cb_clic_map.stateChanged.connect(self.click_check_box)
+
+            self.clear()
+            self.send_logs_messages('ok', 'Plugin is ready to be used ! \
+            \n------------------------------------------')
 
             items_list = ["Item 1", "Item 2", "Item 3"]
             self.dockwidget.lv_address_result.addItems(items_list)
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
-            # show the dockwidget
             # TODO: fix to allow choice of dock location
             self.iface.addDockWidget(Qt.LeftDockWidgetArea, self.dockwidget)
             self.dockwidget.show()
