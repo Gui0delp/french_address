@@ -2,6 +2,7 @@ from qgis.gui import QgsMapTool
 
 from .coordinates import Coordinates
 from .message_handler import MessageHandler
+from .api_address import ApiAddress
 class PointTool(QgsMapTool):
     """Point tool"""
 
@@ -11,9 +12,11 @@ class PointTool(QgsMapTool):
         self.dialog = dialog
         self.coord = Coordinates(self.dialog)
         self.message_handler = MessageHandler(self.dialog)
+        self.api_address = ApiAddress()
 
     def canvasReleaseEvent(self, event):
         """Get the clic from the mouss"""
+        response = ""
 
         if self.dialog.cb_clic_map.isChecked():
             x = event.pos().x()
@@ -24,5 +27,9 @@ class PointTool(QgsMapTool):
             point = self.canvas.getCoordinateTransform().toMapCoordinates(x, y)
             self.coord.set_point_to_wgs84(point)
             self.coord.set_latitude_longitude_wgs84()
-            message = "{} | {}".format(str(self.coord.latitude), str(self.coord.longitude))
-            self.message_handler.send_logs_messages('ok', message)
+            self.api_address.set_reverse_url(self.coord.longitude, self.coord.latitude)
+            self.api_address.set_reverse_request()
+            self.api_address.encode_response()
+            self.api_address.jso_to_dictionnary()
+            response = self.api_address.take_reverse_response_label()
+            self.dialog.le_input_address.setText(response)
