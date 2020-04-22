@@ -34,11 +34,9 @@ class ApiAddress:
     def test_reverse_request(self):
         try:
             urlopen(self.url, context=self.my_context)
-            self.dialog.pte_logs_event.setStyleSheet('color: green')
             self.message_handler.send_logs_messages('ok', f'Connexion établie: {self.url}.')
             return True
         except:
-            self.dialog.pte_logs_event.setStyleSheet('color: red')
             self.message_handler.send_logs_messages('error', f'La connexion a échoué: {self.url}.')
             return False
 
@@ -62,7 +60,6 @@ class ApiAddress:
         try:
             self.reverse_label = self.dictionnary_data['features'][0]['properties']['label']
         except:
-            self.dialog.pte_logs_event.setStyleSheet('color: red')
             self.message_handler.send_logs_messages('error', 'Il n\'y a pas d\'adresse à cet emplacement.')
             self.dialog.le_input_address.setText('Pas d\'adresse valide')
 
