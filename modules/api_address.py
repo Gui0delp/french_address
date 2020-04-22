@@ -3,6 +3,8 @@ Manage the api address
 """
 from urllib.request import urlopen
 import json
+import ssl
+
 from .message_handler import MessageHandler
 
 class ApiAddress:
@@ -20,6 +22,7 @@ class ApiAddress:
         self.dictionnary_data = ""
         self.reverse_label = ""
         self.message_handler = MessageHandler(self.dialog)
+        self.my_context = ssl._create_unverified_context()
 
     def set_reverse_url(self, longitude, latitude):
         """Set the reverse url with the longitude and latitude"""
@@ -30,7 +33,7 @@ class ApiAddress:
 
     def set_reverse_request(self):
         """Open the url"""
-        self.response = urlopen(self.url)
+        self.response = urlopen(self.url, context=self.my_context)
         return self.response
 
     def encode_response(self):
