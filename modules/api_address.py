@@ -2,6 +2,7 @@
 Manage the api address
 """
 from urllib.request import urlopen
+import urllib.parse
 import json
 import ssl
 
@@ -71,12 +72,11 @@ class ApiAddress:
     def set_search_url(self, house_number, name_road, post_code):
         """Set the search url with the longitude and latitude"""
 
-        name = str(name_road).split(' ')
-        name_road_final = '%20'.join(name)
+        name_parse = urllib.parse.quote(name_road, safe='\'')
 
         self.url = self.search_url \
                                     + '?q=' + house_number \
-                                    + '%20' + name_road_final \
+                                    + '%20' + name_parse \
                                     + post_code \
                                     + '&type=housenumber' \
                                     + '&autocomplete=1'
