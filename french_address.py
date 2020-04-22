@@ -27,6 +27,7 @@ from qgis.PyQt.QtWidgets import QAction, QApplication
 from PyQt5.QtCore import QTime
 from .modules.point_tool import PointTool
 from .modules.coordinates import Coordinates
+from .modules.address import Address
 from .modules.message_handler import MessageHandler
 from .resources import *
 
@@ -192,6 +193,13 @@ class FrenchAddress:
 
         self.iface.mapCanvas().setMapTool(tool)
 
+    def address_processing(self):
+        """Launch the address processing"""
+        address_entry = self.dockwidget.le_input_address.text()
+        
+        if self.address.test_address_entry(address_entry):
+            print('ok')
+
     def run(self):
         """Run method that loads and starts the plugin"""
 
@@ -201,8 +209,10 @@ class FrenchAddress:
                 self.active_tool = self.iface.mapCanvas().mapTool()
                 self.dockwidget = FrenchAddressDockWidget()
                 self.coord = Coordinates(self.dockwidget)
+                self.address = Address(self.dockwidget)
                 self.handler_message = MessageHandler(self.dockwidget)
                 self.dockwidget.cb_clic_map.stateChanged.connect(self.click_check_box)
+                self.dockwidget.pb_locate_search.clicked.connect(self.address_processing)
 
             self.clear()
             self.handler_message.send_logs_messages('ok', 'Le plugin est prêt ! \
