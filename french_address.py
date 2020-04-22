@@ -211,8 +211,13 @@ class FrenchAddress:
                     self.api_address.set_request()
                     self.api_address.encode_response()
                     self.api_address.jso_to_dictionnary()
-                    response = self.api_address.take_search_response_label()
-                    print(response)
+                    point_wgs84 = self.api_address.take_search_response_label()
+                    self.coord.set_canvas_project(self.canvas)
+                    self.coord.set_destination_crs()
+                    self.coord.take_crs_from_project(self.iface)
+                    self.coord.set_x_transform_reverse()
+                    self.coord.set_latitude_longitude_crs(point_wgs84)
+                    self.coord.zoom_to_canvas(self.canvas)
 
     def run(self):
         """Run method that loads and starts the plugin"""
