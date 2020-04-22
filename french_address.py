@@ -29,6 +29,7 @@ from .modules.point_tool import PointTool
 from .modules.coordinates import Coordinates
 from .modules.address import Address
 from .modules.message_handler import MessageHandler
+from .modules.api_address import ApiAddress
 from .resources import *
 
 from .french_address_dockwidget import FrenchAddressDockWidget
@@ -200,7 +201,19 @@ class FrenchAddress:
         if self.address.test_address_entry(address_entry):
             self.address.format_address_entry()
             if self.address.test_obligatory_field():
-                pass
+
+                self.api_address.set_search_url(
+                    self.address.house_number,
+                    self.address.type_road,
+                    self.address.name_road,
+                    self.address.postcode,
+                )
+                if self.api_address.test_request():
+                    self.api_address.set_request()
+                    self.api_address.encode_response()
+                    self.api_address.jso_to_dictionnary()
+                    response = self.api_address.take_search_response_label()
+                    print(response)
 
     def run(self):
         """Run method that loads and starts the plugin"""
@@ -213,6 +226,7 @@ class FrenchAddress:
                 self.coord = Coordinates(self.dockwidget)
                 self.address = Address(self.dockwidget)
                 self.handler_message = MessageHandler(self.dockwidget)
+                self.api_address = ApiAddress(self.dockwidget)
                 self.dockwidget.cb_clic_map.stateChanged.connect(self.click_check_box)
                 self.dockwidget.pb_locate_search.clicked.connect(self.address_processing)
 
