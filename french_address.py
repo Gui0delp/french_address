@@ -198,7 +198,9 @@ class FrenchAddress:
         address_entry = self.dockwidget.le_input_address.text()
         
         if self.address.test_address_entry(address_entry):
-            print('ok')
+            self.address.format_address_entry()
+            if self.address.test_obligatory_field():
+                pass
 
     def run(self):
         """Run method that loads and starts the plugin"""
