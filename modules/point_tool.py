@@ -28,8 +28,8 @@ class PointTool(QgsMapTool):
             self.coord.set_point_to_wgs84(point)
             self.coord.set_latitude_longitude_wgs84()
             self.api_address.set_reverse_url(self.coord.longitude, self.coord.latitude)
-            if self.api_address.test_reverse_request():
-                self.api_address.set_reverse_request()
+            if self.api_address.test_request():
+                self.api_address.set_request()
                 self.api_address.encode_response()
                 self.api_address.jso_to_dictionnary()
                 response = self.api_address.take_reverse_response_label()
