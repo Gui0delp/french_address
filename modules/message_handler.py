@@ -15,10 +15,13 @@ class MessageHandler:
         self.time = self.set_current_time()
 
         if message_type == 'ok':
+            self.dialog.pte_logs_event.setStyleSheet('color: green')
             logs_message = "{} | {} : {}".format(self.time, 'OK', message)
         elif message_type == 'error':
+            self.dialog.pte_logs_event.setStyleSheet('color: red')
             logs_message = "{} | {} : {}".format(self.time, 'ERROR', message)
         else:
+            self.dialog.pte_logs_event.setStyleSheet('color: auto')
             logs_message = "{} | {} : {}".format(self.time, 'Info', message)
 
         return self.dialog.pte_logs_event.appendPlainText(logs_message)
