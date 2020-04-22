@@ -204,7 +204,6 @@ class FrenchAddress:
 
                 self.api_address.set_search_url(
                     self.address.house_number,
-                    self.address.type_road,
                     self.address.name_road,
                     self.address.postcode,
                 )
