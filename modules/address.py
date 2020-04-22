@@ -7,7 +7,7 @@ import re
 from .message_handler import MessageHandler
 
 class Address:
-    """This class manage the methods for coordinates """
+    """This class manage the methods for coordinates"""
 
     def __init__(self, dialog):
         self.dialog = dialog

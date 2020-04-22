@@ -15,7 +15,7 @@ class PointTool(QgsMapTool):
         self.api_address = ApiAddress(self.dialog)
 
     def canvasReleaseEvent(self, event):
-        """Get the clic from the mouss"""
+        """Get the clic from the mouss """
         response = ""
 
         if self.dialog.cb_clic_map.isChecked():

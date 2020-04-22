@@ -70,7 +70,7 @@ class ApiAddress:
         return self.reverse_label
 
     def set_search_url(self, house_number, name_road, post_code):
-        """Set the search url with the longitude and latitude"""
+        """Set the search url with the longitude and latitude """
 
         name_parse = urllib.parse.quote(name_road, safe='\'')
 

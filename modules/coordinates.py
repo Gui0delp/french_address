@@ -10,7 +10,7 @@ from qgis.core import (
 )
 
 class Coordinates:
-    """This class manage the methods for coordinates """
+    """This class manage the methods for coordinates"""
 
     def __init__(self, dialog):
         self.dialog = dialog

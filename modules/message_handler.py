@@ -10,7 +10,7 @@ class MessageHandler:
         self.time = ""
 
     def send_logs_messages(self, message_type, message):
-        """Send messages to the logs"""
+        """Send messages to the logs """
 
         self.time = self.set_current_time()
 

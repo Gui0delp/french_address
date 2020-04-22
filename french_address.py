@@ -236,7 +236,7 @@ class FrenchAddress:
 
             self.clear()
             self.handler_message.send_logs_messages('ok', 'Le plugin est prêt ! \
-            \n-------------------------------------')
+            \n--------------------------------------')
 
             items_list = ["Item 1", "Item 2", "Item 3"]
             self.dockwidget.lv_address_result.addItems(items_list)
