@@ -32,6 +32,7 @@ class ApiAddress:
         return self.url
 
     def test_reverse_request(self):
+        """test if the request is OK"""
         try:
             urlopen(self.url, context=self.my_context)
             self.message_handler.send_logs_messages('ok', f'Connexion établie: {self.url}.')
