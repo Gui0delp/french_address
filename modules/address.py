@@ -12,11 +12,10 @@ class Address:
     def __init__(self, dialog):
         self.dialog = dialog
         self.house_number = ""
-        self.type_road = ""
         self.name_road = ""
         self.postcode = ""
         self.city = ""
-        self.pattern_address = r"(?P<num>^[0-9]*)([,]*[ ]*)(?P<type>\D\S*)(?P<name>\D*)(?P<city_code>[0-9]*)([,]*[ ]*)(?P<city>\D*)"
+        self.pattern_address = r"(?P<num>^[0-9]*)([,]*[ ]*)(?P<name>\D*)(?P<city_code>[0-9]*)([,]*[ ]*)(?P<city>\D*)"
         self.address_entry = ""
         self.entry = ""
         self.message_handler = MessageHandler(self.dialog)
@@ -38,7 +37,6 @@ class Address:
         """format the address entry"""
 
         self.house_number = str(self.entry.group('num'))
-        self.type_road = str(self.entry.group('type'))
         self.name_road = str(self.entry.group('name'))
         self.postcode = str(self.entry.group('city_code'))
         self.city = str(self.entry.group('city'))
@@ -52,11 +50,6 @@ class Address:
             test = False
             self.message_handler.send_logs_messages(
                 'error', 'Il faut un numéro de rue \n exemple: 20 Avenue de Ségur 75007')
-
-        if not self.type_road:
-            test = False
-            self.message_handler.send_logs_messages(
-                'error', 'Il manques un type de rue \n exemple: Rue, Avenue, boulevard')
 
         if not self.name_road:
             test = False

@@ -68,7 +68,7 @@ class ApiAddress:
 
         return self.reverse_label
 
-    def set_search_url(self, house_number, type_road, name_road, post_code):
+    def set_search_url(self, house_number, name_road, post_code):
         """Set the search url with the longitude and latitude"""
 
         name = str(name_road).split(' ')
@@ -76,9 +76,8 @@ class ApiAddress:
 
         self.url = self.search_url \
                                     + '?q=' + house_number \
-                                    + '%20' + type_road \
-                                    + name_road_final \
-                                    + '%20' + post_code \
+                                    + '%20' + name_road_final \
+                                    + post_code \
                                     + '&type=housenumber' \
                                     + '&autocomplete=1'
         return self.url
