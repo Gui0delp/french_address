@@ -33,7 +33,7 @@ class ApiAddress:
 
     def test_reverse_request(self):
         try:
-            test = urlopen(self.url, context=self.my_context)
+            urlopen(self.url, context=self.my_context)
             self.message_handler.send_logs_messages('ok', f'Connexion établie: {self.url}.')
             return True
         except:
