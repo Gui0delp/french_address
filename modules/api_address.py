@@ -31,6 +31,15 @@ class ApiAddress:
         self.url = self.reverse_url + '?lon=' + lon + '&lat=' + lat
         return self.url
 
+    def test_reverse_request(self):
+        try:
+            test = urlopen(self.url, context=self.my_context)
+            self.message_handler.send_logs_messages('ok', f'Connexion établie: {self.url}.')
+            return True
+        except:
+            self.message_handler.send_logs_messages('error', f'La connexion a échoué: {self.url}.')
+            return False
+
     def set_reverse_request(self):
         """Open the url"""
         self.response = urlopen(self.url, context=self.my_context)
@@ -51,7 +60,7 @@ class ApiAddress:
         try:
             self.reverse_label = self.dictionnary_data['features'][0]['properties']['label']
         except:
-            self.message_handler.send_logs_messages('error', 'Il n\'y a pas d\'adresse à cet emplacement')
+            self.message_handler.send_logs_messages('error', 'Il n\'y a pas d\'adresse à cet emplacement.')
 
         return self.reverse_label
 
