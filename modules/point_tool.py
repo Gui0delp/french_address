@@ -12,7 +12,7 @@ class PointTool(QgsMapTool):
         self.dialog = dialog
         self.coord = Coordinates(self.dialog)
         self.message_handler = MessageHandler(self.dialog)
-        self.api_address = ApiAddress()
+        self.api_address = ApiAddress(self.dialog)
 
     def canvasReleaseEvent(self, event):
         """Get the clic from the mouss"""
