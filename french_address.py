@@ -205,8 +205,8 @@ class FrenchAddress:
                 self.dockwidget.cb_clic_map.stateChanged.connect(self.click_check_box)
 
             self.clear()
-            self.handler_message.send_logs_messages('ok', 'Le plugin est prêt à être utilisé \
-            \n--------------------------------------------------')
+            self.handler_message.send_logs_messages('ok', 'Le plugin est prêt ! \
+            \n-------------------------------------')
 
             items_list = ["Item 1", "Item 2", "Item 3"]
             self.dockwidget.lv_address_result.addItems(items_list)
