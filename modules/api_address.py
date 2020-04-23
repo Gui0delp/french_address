@@ -39,10 +39,12 @@ class ApiAddress:
         """test if the request is OK"""
         try:
             urlopen(self.url, context=self.my_context)
-            self.message_handler.send_logs_messages('ok', f'Connexion établie: {self.url}')
+            self.message_handler.send_logs_messages('ok',\
+                f'Connexion établie: {self.url}')
             return True
         except:
-            self.message_handler.send_logs_messages('error', f'La connexion a échoué: {self.url}')
+            self.message_handler.send_logs_messages('error',\
+                f'La connexion a échoué: {self.url}')
             return False
 
     def set_request(self):
@@ -63,9 +65,11 @@ class ApiAddress:
     def take_reverse_response_label(self):
         """Return the label of the request"""
         try:
-            self.reverse_label = self.dictionnary_data['features'][0]['properties']['label']
+            self.reverse_label = \
+            self.dictionnary_data['features'][0]['properties']['label']
         except:
-            self.message_handler.send_logs_messages('error', 'Il n\'y a pas d\'adresse à cet emplacement.')
+            self.message_handler.send_logs_messages('error',\
+                'Il n\'y a pas d\'adresse à cet emplacement.')
 
         return self.reverse_label
 
@@ -85,7 +89,8 @@ class ApiAddress:
     def take_search_response_label(self):
         """Return the label of the request"""
         try:
-            self.search_label = self.dictionnary_data['features'][0]['geometry']['coordinates']
+            self.search_label = \
+            self.dictionnary_data['features'][0]['geometry']['coordinates']
         except:
             self.message_handler.send_logs_messages(
                 'error', 'Il n\'y a pas d\'adresse avec cette saisie.')

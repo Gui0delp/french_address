@@ -1,16 +1,18 @@
+"""Manage the hangler message"""
+
 from PyQt5.QtCore import QTime
-from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
+from qgis.PyQt.QtCore import Qt
 
 class MessageHandler:
     """This class manage the methods for messages """
 
     def __init__(self, dialog):
-  
+
         self.dialog = dialog
         self.time = ""
 
     def send_logs_messages(self, message_type, message):
-        """Send messages to the logs """
+        """Send messages to the logs"""
 
         self.time = self.set_current_time()
 

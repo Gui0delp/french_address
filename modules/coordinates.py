@@ -6,7 +6,6 @@ from qgis.core import (
     QgsCoordinateTransform,
     QgsProject,
     QgsRectangle,
-    QgsPoint,
 )
 
 class Coordinates:

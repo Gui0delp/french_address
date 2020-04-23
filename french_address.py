@@ -21,6 +21,8 @@
  *                                                                         *
  ***************************************************************************/
 """
+import os.path
+
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction, QApplication
@@ -33,7 +35,6 @@ from .modules.api_address import ApiAddress
 from .resources import *
 
 from .french_address_dockwidget import FrenchAddressDockWidget
-import os.path
 
 
 class FrenchAddress:
@@ -77,7 +78,6 @@ class FrenchAddress:
         self.pluginIsActive = False
         self.dockwidget = None
 
-
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
@@ -92,7 +92,6 @@ class FrenchAddress:
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
         return QCoreApplication.translate('FrenchAddress', message)
-
 
     def add_action(
         self,
@@ -130,7 +129,6 @@ class FrenchAddress:
 
         return action
 
-
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
@@ -157,7 +155,6 @@ class FrenchAddress:
         # self.dockwidget = None
 
         self.pluginIsActive = False
-
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
@@ -196,7 +193,7 @@ class FrenchAddress:
     def address_processing(self):
         """Launch the address processing"""
         address_entry = self.dockwidget.le_input_address.text()
-        
+
         if self.address.test_address_entry(address_entry):
             self.address.format_address_entry()
             if self.address.test_obligatory_field():
@@ -223,6 +220,7 @@ class FrenchAddress:
 
         if not self.pluginIsActive:
             self.pluginIsActive = True
+
             if self.dockwidget == None:
                 self.active_tool = self.iface.mapCanvas().mapTool()
                 self.dockwidget = FrenchAddressDockWidget()
@@ -230,12 +228,18 @@ class FrenchAddress:
                 self.address = Address(self.dockwidget)
                 self.handler_message = MessageHandler(self.dockwidget)
                 self.api_address = ApiAddress(self.dockwidget)
-                self.dockwidget.cb_clic_map.stateChanged.connect(self.click_check_box)
-                self.dockwidget.pb_locate_search.clicked.connect(self.address_processing)
+             
+                self.dockwidget.cb_clic_map.stateChanged.connect(
+                    self.click_check_box
+                    )
+                self.dockwidget.pb_locate_search.clicked.connect(
+                    self.address_processing
+                    )
 
             self.clear()
-            self.handler_message.send_logs_messages('ok', 'Le plugin est prêt ! \
-            \n--------------------------------------')
+            self.handler_message.send_logs_messages('ok', \
+                'Le plugin est prêt ! \
+                \n--------------------------------------')
 
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
