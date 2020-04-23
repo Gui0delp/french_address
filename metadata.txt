@@ -5,12 +5,12 @@
 [general]
 name=Adresse France
 qgisMinimumVersion=3.4
-description=Recherche et localisation d'adresse française.
+description=French address search and location.
 version=1.0
 author=Guillaume DELPLANQUE
 email=delpro.guillaume@gmail.com
 
-about=Le plugin utilise l'API fourni par le gouvernement français (url : https://geo.api.gouv.fr/adresse). Le but est de rechercher ou localiser les adresses sur le territoire français. Pour rechercher, c'est simple, il suffit d'écrire l'adresse voulue dans la barre de recherche. Pour un meilleur résultat, il faut renseigner un numéro un nom de voie ainsi que le code postal. Vous pouvez aussi en cliquant sur le canevas (activer l'outil: "Localiser sur la carte.") récupérer l'adresse selon les coordonnées.
+about=The plugin uses the API provided by the French government (url: https://geo.api.gouv.fr/adresse). The goal is to find or locate addresses on French territory. To search, it's simple, just write the desired address in the search bar. For best results, enter a number, a street name and the postal code. You can also by clicking on the canvas (activate the tool: "Locate on the map.") Recover the address according to the coordinates.
 
 tracker=https://github.com/Gui0delp/french_address/issues
 repository=https://github.com/Gui0delp/french_address
