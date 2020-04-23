@@ -18,7 +18,7 @@
     <item row="1" column="0">
      <widget class="QLineEdit" name="le_input_address">
       <property name="placeholderText">
-       <string>19, rue des Carterons 44220 Couëron</string>
+       <string>8 Boulevard du Port 80000 Amiens</string>
       </property>
      </widget>
     </item>
