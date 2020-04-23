@@ -177,7 +177,6 @@ class FrenchAddress:
         """Permit to clean the differents items from the GUI"""
 
         self.dockwidget.le_input_address.clear()
-        self.dockwidget.lv_address_result.clear()
         self.dockwidget.pte_logs_event.clear()
 
     def click_check_box(self, state):
@@ -238,8 +237,6 @@ class FrenchAddress:
             self.handler_message.send_logs_messages('ok', 'Le plugin est prêt ! \
             \n--------------------------------------')
 
-            items_list = ["Item 1", "Item 2", "Item 3"]
-            self.dockwidget.lv_address_result.addItems(items_list)
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
             # TODO: fix to allow choice of dock location
