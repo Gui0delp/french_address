@@ -227,12 +227,22 @@ class FrenchAddress:
                     self.coord.set_latitude_longitude_crs(point_wgs84)
                     self.coord.zoom_to_canvas(self.canvas)
 
+    def set_visible_properties(self, state):
+
+        if state == Qt.Checked:
+            self.dockwidget.tw_details.setVisible(True)
+        else:
+            self.dockwidget.tw_details.setVisible(False)
+
     def set_connections(self):
         self.dockwidget.tb_catch_tool.clicked.connect(
             self.enable_disable_catch_tool
         )
         self.dockwidget.pb_locate_search.clicked.connect(
             self.address_processing
+        )
+        self.dockwidget.chb_view_details.stateChanged.connect(
+            self.set_visible_properties
         )
 
     def run(self):
@@ -243,12 +253,12 @@ class FrenchAddress:
 
             if self.dockwidget is None:
                 self.dockwidget = FrenchAddressDockWidget()
+                self.dockwidget.tw_details.setVisible(False)
                 self.coord = Coordinates(self.dockwidget)
                 self.address = Address(self.dockwidget)
                 self.api_address = ApiAddress()
                 self.dockwidget.tb_catch_tool.setIcon(QIcon(self.catch_tool_icon))
                 self.set_connections()
-
 
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
