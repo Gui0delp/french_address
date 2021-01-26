@@ -1,6 +1,7 @@
 """Manage the tool"""
 from qgis.gui import QgsMapTool
 from qgis.core import Qgis, QgsMessageLog
+from qgis.PyQt.QtWidgets import QTableWidgetItem
 from .coordinates import Coordinates
 from .api_address import ApiAddress
 
@@ -30,6 +31,7 @@ class CatchTool(QgsMapTool):
             self.api_address.set_request()
             self.api_address.decode_response()
             self.api_address.json_to_dictionnary()
+            self.initialize_table_widget()
             if self.api_address.take_reverse_response_label():
                 response_label = self.api_address.take_reverse_response_label()
                 self.dialog.le_input_address.setText(response_label)
@@ -55,6 +57,13 @@ class CatchTool(QgsMapTool):
         self.fr_ad_instance.catch_tool_activate = False
         self.fr_ad_instance.tool = None
         self.deactivated.emit()
+
+    def initialize_table_widget(self):
+        self.dialog.tw_details.clear()
+        self.dialog.tw_details.setRowCount(0)
+        self.dialog.tw_details.setColumnCount(2)
+        self.dialog.tw_details.setHorizontalHeaderItem(0, QTableWidgetItem("attribute"))
+        self.dialog.tw_details.setHorizontalHeaderItem(1, QTableWidgetItem("value"))
 
     def message_log(self, msg=""):
         QgsMessageLog.logMessage('{} {}'.format(self.__class__.__name__, msg), 'FrenchAddress', Qgis.Info)
