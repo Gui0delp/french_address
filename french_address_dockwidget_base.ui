@@ -46,7 +46,7 @@
     <item row="3" column="0" colspan="3">
      <widget class="QPushButton" name="pb_locate_search">
       <property name="text">
-       <string>Rechercher/Localiser</string>
+       <string>Search</string>
       </property>
       <property name="default">
        <bool>true</bool>
