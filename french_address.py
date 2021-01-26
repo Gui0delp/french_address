@@ -23,14 +23,13 @@
 """
 import os.path
 
+from qgis.core import QgsApplication
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
-from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtGui import QIcon, QCursor, QPixmap
 from qgis.PyQt.QtWidgets import QAction, QApplication
-from PyQt5.QtCore import QTime
-from .modules.point_tool import PointTool
+from .modules.catch_tool import CatchTool
 from .modules.coordinates import Coordinates
 from .modules.address import Address
-from .modules.message_handler import MessageHandler
 from .modules.api_address import ApiAddress
 from .resources import *
 
@@ -69,7 +68,7 @@ class FrenchAddress:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&Adresse France')
+        self.menu = self.tr('&French Address ')
         # TODO: We are going to let the user set this up in a future iteration
         self.toolbar = self.iface.addToolBar(u'FrenchAddress')
         self.toolbar.setObjectName(u'FrenchAddress')
@@ -77,6 +76,10 @@ class FrenchAddress:
         #print "** INITIALIZING FrenchAddress"
         self.pluginIsActive = False
         self.dockwidget = None
+
+        self.tool = None
+        self.catch_tool_activate = False
+        self.catch_tool_icon = QgsApplication.iconPath("cursors/mCapturePoint.svg")
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -135,7 +138,7 @@ class FrenchAddress:
         icon_path = ':/plugins/french_address/icon.png'
         self.add_action(
             icon_path,
-            text=self.tr(u'Adresse France'),
+            text=self.tr('French Address'),
             callback=self.run,
             parent=self.iface.mainWindow())
 
@@ -146,7 +149,11 @@ class FrenchAddress:
 
         # disconnects
         self.dockwidget.closingPlugin.disconnect(self.onClosePlugin)
-        QApplication.restoreOverrideCursor()
+        self.canvas.unsetMapTool(self.tool)
+        self.dockwidget.tb_catch_tool.setChecked(False)
+        self.dockwidget.pb_locate_search.setEnabled(True)
+        self.catch_tool_activate = False
+        self.tool = None
 
         # remove this statement if dockwidget is to remain
         # for reuse if plugin is reopened
@@ -162,37 +169,42 @@ class FrenchAddress:
         #print "** UNLOAD FrenchAddress"
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&Adresse France'),
+                self.tr('&French Address'),
                 action)
             self.iface.removeToolBarIcon(action)
+
+        if self.tool:
+            self.canvas.unsetMapTool(self.tool)
+            self.dockwidget.tb_catch_tool.setChecked(False)
+            self.catch_tool_activate = False
+
         # remove the toolbar
         del self.toolbar
 
-    #--------------------------------------------------------------------------
-
     def clear(self):
         """Permit to clean the differents items from the GUI"""
-
         self.dockwidget.le_input_address.clear()
-        self.dockwidget.pte_logs_event.clear()
 
-    def click_check_box(self, state):
-        """The function manage the event from the check box"""
-
-        if state == QtCore.Qt.Checked:
-            QApplication.setOverrideCursor(Qt.CrossCursor)
-            tool = PointTool(self.canvas, self.dockwidget)
+    def enable_disable_catch_tool(self):
+        if not self.catch_tool_activate:
+            if self.tool is None:
+                self.tool = CatchTool(self.iface, self.dockwidget, self)
+                self.canvas.setMapTool(self.tool)
+                self.canvas.setCursor(QCursor(QPixmap(self.catch_tool_icon)))
+                self.catch_tool_activate = True
             self.dockwidget.pb_locate_search.setEnabled(False)
+            self.dockwidget.tb_catch_tool.setChecked(True)
         else:
             QApplication.restoreOverrideCursor()
-            tool = self.active_tool
+            self.canvas.unsetMapTool(self.tool)
+            self.tool = None
+            self.catch_tool_activate = False
             self.dockwidget.pb_locate_search.setEnabled(True)
-
-        self.iface.mapCanvas().setMapTool(tool)
+            self.dockwidget.tb_catch_tool.setChecked(False)
 
     def address_processing(self):
         """Launch the address processing"""
-        address_entry = self.dockwidget.le_input_address.text()
+        address_entry = self.dockwidget.le_input_address.toPlainText()
 
         if self.address.test_address_entry(address_entry):
             self.address.format_address_entry()
@@ -202,11 +214,11 @@ class FrenchAddress:
                     self.address.house_number,
                     self.address.name_road,
                     self.address.postcode,
-                )
+                    )
                 if self.api_address.test_request():
                     self.api_address.set_request()
-                    self.api_address.encode_response()
-                    self.api_address.jso_to_dictionnary()
+                    self.api_address.decode_response()
+                    self.api_address.json_to_dictionnary()
                     point_wgs84 = self.api_address.take_search_response_label()
                     self.coord.set_canvas_project(self.canvas)
                     self.coord.set_destination_crs()
@@ -215,31 +227,28 @@ class FrenchAddress:
                     self.coord.set_latitude_longitude_crs(point_wgs84)
                     self.coord.zoom_to_canvas(self.canvas)
 
+    def set_connections(self):
+        self.dockwidget.tb_catch_tool.clicked.connect(
+            self.enable_disable_catch_tool
+        )
+        self.dockwidget.pb_locate_search.clicked.connect(
+            self.address_processing
+        )
+
     def run(self):
         """Run method that loads and starts the plugin"""
 
         if not self.pluginIsActive:
             self.pluginIsActive = True
 
-            if self.dockwidget == None:
-                self.active_tool = self.iface.mapCanvas().mapTool()
+            if self.dockwidget is None:
                 self.dockwidget = FrenchAddressDockWidget()
                 self.coord = Coordinates(self.dockwidget)
                 self.address = Address(self.dockwidget)
-                self.handler_message = MessageHandler(self.dockwidget)
-                self.api_address = ApiAddress(self.dockwidget)
-             
-                self.dockwidget.cb_clic_map.stateChanged.connect(
-                    self.click_check_box
-                    )
-                self.dockwidget.pb_locate_search.clicked.connect(
-                    self.address_processing
-                    )
+                self.api_address = ApiAddress()
+                self.dockwidget.tb_catch_tool.setIcon(QIcon(self.catch_tool_icon))
+                self.set_connections()
 
-            self.clear()
-            self.handler_message.send_logs_messages('ok', \
-                'Le plugin est prêt ! \
-                \n--------------------------------------')
 
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
