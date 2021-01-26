@@ -1,20 +1,18 @@
 """
 Manage the api address
 """
+from qgis.core import Qgis, QgsMessageLog
 from urllib.request import urlopen
 import urllib.parse
 import json
 import ssl
 
-from .message_handler import MessageHandler
 
 class ApiAddress:
     """ This class manage the methods for api
         url: https://geo.api.gouv.fr/adresse
     """
-
-    def __init__(self, dialog):
-        self.dialog = dialog
+    def __init__(self):
         self.reverse_url = "https://api-adresse.data.gouv.fr/reverse/"
         self.search_url = "https://api-adresse.data.gouv.fr/search/"
         self.url = ""
@@ -23,10 +21,13 @@ class ApiAddress:
         self.dictionnary_data = ""
         self.reverse_label = ""
         self.search_label = ""
-        self.message_handler = MessageHandler(self.dialog)
         self.my_context = ssl._create_unverified_context()
         self.latitude = ""
         self.longitude = ""
+        self.error_message_no_address_locate = "No address found at this coordinates"
+        self.error_message_no_address_found = "There is no address with this entry"
+        self.error_message_connection = 'The connection failed'
+        self.success_message_connection = 'Connection established'
 
     def set_reverse_url(self, longitude, latitude):
         """Set the reverse url with the longitude and latitude"""
@@ -39,12 +40,10 @@ class ApiAddress:
         """test if the request is OK"""
         try:
             urlopen(self.url, context=self.my_context)
-            self.message_handler.send_logs_messages('ok',\
-                f'Connexion établie: {self.url}')
+            self.message_log(f'{self.success_message_connection}: {self.url}')
             return True
         except:
-            self.message_handler.send_logs_messages('error',\
-                f'La connexion a échoué: {self.url}')
+            self.message_log(f'{self.error_message_connection}: {self.url}')
             return False
 
     def set_request(self):
@@ -52,12 +51,12 @@ class ApiAddress:
         self.response = urlopen(self.url, context=self.my_context)
         return self.response
 
-    def encode_response(self):
+    def decode_response(self):
         """decode with the utf-8 encodage, the response"""
         self.json_data = self.response.read().decode('utf-8')
         return self.json_data
 
-    def jso_to_dictionnary(self):
+    def json_to_dictionnary(self):
         """Return a dictionnaire from json"""
         self.dictionnary_data = json.loads(self.json_data)
         return self.dictionnary_data
@@ -67,11 +66,10 @@ class ApiAddress:
         try:
             self.reverse_label = \
             self.dictionnary_data['features'][0]['properties']['label']
+            return self.reverse_label
         except:
-            self.message_handler.send_logs_messages('error',\
-                'Il n\'y a pas d\'adresse à cet emplacement.')
-
-        return self.reverse_label
+            self.message_log(self.error_message_no_address_locate)
+            return False
 
     def set_search_url(self, house_number, name_road, post_code):
         """Set the search url with the longitude and latitude """
@@ -92,7 +90,9 @@ class ApiAddress:
             self.search_label = \
             self.dictionnary_data['features'][0]['geometry']['coordinates']
         except:
-            self.message_handler.send_logs_messages(
-                'error', 'Il n\'y a pas d\'adresse avec cette saisie.')
+            self.message_log(self.error_message_no_address_found)
 
         return self.search_label
+
+    def message_log(self, msg=""):
+        QgsMessageLog.logMessage('{} {}'.format(self.__class__.__name__, msg), 'FrenchAddress', Qgis.Info)
