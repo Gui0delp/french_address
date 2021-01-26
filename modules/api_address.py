@@ -18,12 +18,14 @@ class ApiAddress:
         self.url = ""
         self.response = ""
         self.json_data = ""
-        self.dictionnary_data = ""
-        self.reverse_label = ""
         self.search_label = ""
         self.my_context = ssl._create_unverified_context()
         self.latitude = ""
         self.longitude = ""
+        self.dictionnary_data = {}
+        self.reverse_label = {}
+        self.reverse_properties = {}
+
         self.error_message_no_address_locate = "No address found at this coordinates"
         self.error_message_no_address_found = "There is no address with this entry"
         self.error_message_connection = 'The connection failed'
@@ -67,6 +69,16 @@ class ApiAddress:
             self.reverse_label = \
             self.dictionnary_data['features'][0]['properties']['label']
             return self.reverse_label
+        except:
+            self.message_log(self.error_message_no_address_locate)
+            return False
+
+    def take_reverse_response_properties(self):
+        """Return the label of the request"""
+        try:
+            self.reverse_properties = \
+            self.dictionnary_data['features'][0]['properties']
+            return self.reverse_properties
         except:
             self.message_log(self.error_message_no_address_locate)
             return False
