@@ -23,7 +23,7 @@
 """
 import os.path
 
-from qgis.core import QgsApplication
+from qgis.core import QgsApplication, Qgis
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon, QCursor, QPixmap
 from qgis.PyQt.QtWidgets import QAction, QApplication
@@ -80,6 +80,8 @@ class FrenchAddress:
         self.tool = None
         self.catch_tool_activate = False
         self.catch_tool_icon = QgsApplication.iconPath("cursors/mCapturePoint.svg")
+        self.copy_icon = QgsApplication.iconPath("mActionEditCopy.svg")
+        self.clipboard = QApplication.clipboard()
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -234,16 +236,32 @@ class FrenchAddress:
         else:
             self.dockwidget.tw_details.setVisible(False)
 
+    def copy_to_clipboard(self):
+        text_to_copy = self.dockwidget.le_input_address.toPlainText()
+        message = 'Nothing copying to the clipboard'
+
+        if text_to_copy != '':
+            self.clipboard.setText(text_to_copy)
+            message = f' address: {text_to_copy}, copied to the clipboard'
+
+        self.iface.messageBar().pushMessage('Info',
+                                            message,
+                                            level=Qgis.Info,
+                                            )
+
     def set_connections(self):
         self.dockwidget.tb_catch_tool.clicked.connect(
             self.enable_disable_catch_tool
-        )
+            )
         self.dockwidget.pb_locate_search.clicked.connect(
             self.address_processing
-        )
+            )
         self.dockwidget.chb_view_details.stateChanged.connect(
             self.set_visible_properties
-        )
+            )
+        self.dockwidget.pb_copy.clicked.connect(
+            self.copy_to_clipboard
+            )
 
     def run(self):
         """Run method that loads and starts the plugin"""
@@ -258,6 +276,7 @@ class FrenchAddress:
                 self.address = Address(self.dockwidget)
                 self.api_address = ApiAddress()
                 self.dockwidget.tb_catch_tool.setIcon(QIcon(self.catch_tool_icon))
+                self.dockwidget.pb_copy.setIcon(QIcon(self.copy_icon))
                 self.set_connections()
 
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
