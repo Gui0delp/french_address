@@ -34,7 +34,9 @@ class CatchTool(QgsMapTool):
             self.initialize_table_widget()
             if self.api_address.take_reverse_response_label():
                 response_label = self.api_address.take_reverse_response_label()
+                response_properties = self.api_address.take_reverse_response_properties()
                 self.dialog.le_input_address.setText(response_label)
+                self.populate_table_widget(response_properties)
             else:
                 message_error = f' no address found at this coordinates EPSG:4326 lon,lat = ' \
                                 f'{self.coord.longitude},{self.coord.latitude}'
@@ -64,6 +66,14 @@ class CatchTool(QgsMapTool):
         self.dialog.tw_details.setColumnCount(2)
         self.dialog.tw_details.setHorizontalHeaderItem(0, QTableWidgetItem("attribute"))
         self.dialog.tw_details.setHorizontalHeaderItem(1, QTableWidgetItem("value"))
+
+    def populate_table_widget(self, datas):
+        self.dialog.tw_details.setRowCount(len(datas))
+        i = 0
+        for attribute, value in datas.items():
+            self.dialog.tw_details.setItem(i, 0, QTableWidgetItem(str(attribute)))
+            self.dialog.tw_details.setItem(i, 1, QTableWidgetItem(str(value)))
+            i += 1
 
     def message_log(self, msg=""):
         QgsMessageLog.logMessage('{} {}'.format(self.__class__.__name__, msg), 'FrenchAddress', Qgis.Info)
