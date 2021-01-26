@@ -11,10 +11,13 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Adresse France</string>
+   <string>French Address</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinAndMaxSize</enum>
+    </property>
     <item row="2" column="0" colspan="2">
      <widget class="QTextBrowser" name="le_input_address">
       <property name="sizePolicy">
