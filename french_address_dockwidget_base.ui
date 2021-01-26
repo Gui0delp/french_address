@@ -18,7 +18,7 @@
     <property name="sizeConstraint">
      <enum>QLayout::SetMinAndMaxSize</enum>
     </property>
-    <item row="2" column="0" colspan="2">
+    <item row="2" column="0" colspan="3">
      <widget class="QTextBrowser" name="le_input_address">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -43,7 +43,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="2">
+    <item row="3" column="0" colspan="3">
      <widget class="QPushButton" name="pb_locate_search">
       <property name="text">
        <string>Rechercher/Localiser</string>
@@ -56,7 +56,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="0" column="2">
      <widget class="QToolButton" name="tb_catch_tool">
       <property name="minimumSize">
        <size>
@@ -90,21 +90,20 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="lbl_address">
+    <item row="4" column="0" colspan="3">
+     <widget class="QCheckBox" name="chb_view_details">
       <property name="font">
        <font>
+        <family>MS Shell Dlg 2</family>
         <pointsize>8</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
        </font>
       </property>
       <property name="text">
-       <string>Result:</string>
+       <string>Show more details</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="0" colspan="2">
+    <item row="5" column="0" colspan="3">
      <widget class="QTableWidget" name="tw_details">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
@@ -148,16 +147,39 @@
       </column>
      </widget>
     </item>
-    <item row="4" column="0" colspan="2">
-     <widget class="QCheckBox" name="chb_view_details">
+    <item row="0" column="0">
+     <widget class="QLabel" name="lbl_address">
       <property name="font">
        <font>
-        <family>MS Shell Dlg 2</family>
         <pointsize>8</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
        </font>
       </property>
       <property name="text">
-       <string>Show more details</string>
+       <string>Result:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QToolButton" name="pb_copy">
+      <property name="minimumSize">
+       <size>
+        <width>24</width>
+        <height>24</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>24</width>
+        <height>24</height>
+       </size>
+      </property>
+      <property name="toolTip">
+       <string>Copy to clipboard</string>
+      </property>
+      <property name="text">
+       <string comment="Copy to clipboard" extracomment="Copy to clipboard">...</string>
       </property>
      </widget>
     </item>
