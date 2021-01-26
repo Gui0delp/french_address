@@ -3,8 +3,8 @@ Manage the addresses
 """
 
 import re
+from qgis.core import Qgis, QgsMessageLog
 
-from .message_handler import MessageHandler
 
 class Address:
     """This class manage the methods for coordinates"""
@@ -18,7 +18,6 @@ class Address:
         self.pattern_address = r"(?P<num>^[0-9]*)([,]*[ ]*)(?P<name>\D*)(?P<city_code>[0-9]*)([,]*[ ]*)(?P<city>\D*)"
         self.address_entry = ""
         self.entry = ""
-        self.message_handler = MessageHandler(self.dialog)
 
     def test_address_entry(self, entry):
         """Test the entry return True if the address format is correct"""
@@ -28,8 +27,7 @@ class Address:
             self.entry = re.match(self.pattern_address, str(entry))
             flag = True
         else:
-            self.message_handler.send_logs_messages(
-                'error', 'Le format de l\'adresse n\'est pas respecté \n \
+            self.message_log('Le format de l\'adresse n\'est pas respecté \n \
                 exemple: 20 Avenue de Ségur 75007 Paris')
             flag = False
         return flag
@@ -49,27 +47,23 @@ class Address:
 
         if not self.house_number:
             test = False
-            self.message_handler.send_logs_messages(
-                'error',
-                'Il faut un numéro de rue \n \
+            self.message_log('Il faut un numéro de rue \n \
                 exemple: 20 Avenue de Ségur 75007')
 
         if not self.name_road:
             test = False
-            self.message_handler.send_logs_messages(
-                'error',
-                'Il manques un nom de rue \n \
+            self.message_log('Il manques un nom de rue \n \
                 exemple: 20 Avenue de Ségur 75007')
 
         if not self.postcode:
             test = False
-            self.message_handler.send_logs_messages(
-                'error',
-                'Il manques le code postal \n \
+            self.message_log('Il manques le code postal \n \
                 exemple: 20 Avenue de Ségur 75007')
 
         if test:
-            self.message_handler.send_logs_messages('ok',\
-                f'L\'adresse {self.address_entry}, est complète')
+            self.message_log(f'L\'adresse {self.address_entry}, est complète')
 
         return test
+
+    def message_log(self, msg=""):
+        QgsMessageLog.logMessage('{} {}'.format(self.__class__.__name__, msg), 'FrenchAddress', Qgis.Info)

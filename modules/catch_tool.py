@@ -1,16 +1,19 @@
 """Manage the tool"""
 from qgis.gui import QgsMapTool
-
+from qgis.core import Qgis
+from qgis.PyQt.QtCore import Qt
 from .coordinates import Coordinates
 from .message_handler import MessageHandler
 from .api_address import ApiAddress
 
+
 class PointTool(QgsMapTool):
     """Point tool"""
 
-    def __init__(self, canvas, dialog):
-        QgsMapTool.__init__(self, canvas)
-        self.canvas = canvas
+    def __init__(self, iface, dialog):
+        QgsMapTool.__init__(self, iface.mapCanvas())
+        self.canvas = iface.mapCanvas()
+        self.iface = iface
         self.dialog = dialog
         self.coord = Coordinates(self.dialog)
         self.message_handler = MessageHandler(self.dialog)
@@ -40,3 +43,14 @@ class PointTool(QgsMapTool):
                 self.api_address.jso_to_dictionnary()
                 response = self.api_address.take_reverse_response_label()
                 self.dialog.le_input_address.setText(response)
+
+    def activate(self):
+        self.iface.messageBar().pushMessage('Info',
+                                            'Click on the map to start capture...',
+                                            level=Qgis.Info,
+                                            )
+        self.canvas.setCursor(Qt.CrossCursor)
+
+    def deactivate(self):
+        QgsMapTool.deactivate(self)
+        self.deactivated.emit()
