@@ -242,9 +242,9 @@ class FrenchAddress:
 
         if text_to_copy != '':
             self.clipboard.setText(text_to_copy)
-            message = f' address: {text_to_copy}, copied to the clipboard'
+            message = f' {text_to_copy}, copied to the clipboard'
 
-        self.iface.messageBar().pushMessage('Info',
+        self.iface.messageBar().pushMessage('Address',
                                             message,
                                             level=Qgis.Info,
                                             )
