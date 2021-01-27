@@ -8,6 +8,7 @@ from qgis.core import (
     QgsRectangle,
 )
 
+
 class Coordinates:
     """This class manage the methods for coordinates"""
 
@@ -15,16 +16,16 @@ class Coordinates:
         self.dialog = dialog
         self.longitude = 0.0
         self.latitude = 0.0
-        self.point_wgs84 = []
-        self.point_crs = []
+        self.deci_latitude = 0.0
+        self.deci_longitude = 0.0
+        self.scale = 0.0003
         self.project_canvas = ""
         self.destination_crs = ""
         self.x_transform = ""
         self.x_transform_reverse = ""
-        self.deci_latitude = 0.0
-        self.deci_longitude = 0.0
-        self.scale = 0.0003
         self.epsg_project = ""
+        self.point_wgs84 = []
+        self.point_crs = []
 
     def set_canvas_project(self, canvas):
         """Return the canvas of the project"""
