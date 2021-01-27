@@ -11,16 +11,14 @@ version=1.1.0
 author=Guillaume DELPLANQUE
 email=delpro.guillaume@gmail.com
 
-about=The goal is to find or locate addresses on French territory.
-    To search, it's simple, just write the desired address in the search bar of the plugin.
-    For best results, enter a number, a street name and the postal code.
-    You can also clicking on the canvas (activate the tool: "Click on the map to capture an address ")
-    Recover the address according to the coordinates.
-about[fr]=Le but est de trouver ou localiser des adresses sur le territoire français.
-     Pour rechercher, c'est simple, il suffit d'écrire l'adresse souhaitée dans la barre de recherche du plugin.
-     Pour de meilleurs résultats, entrez un numéro, un nom de rue et le code postal.
-     Vous pouvez également cliquer sur le canevas (activer l'outil': "Cliquer sur la carte pour capturer une adresse")
-     Récupérez l'adresse en fonction des coordonnées.
+about=To search for an address, simply write the desired address in the plugin's search bar.
+    For best results, enter a house number, street name, and zip code.
+    You can also retrieve the address based on the coordinates by activating the tool "Click on the map to capture an address".
+    The cursor will change to a cross and you can start typing.
+about[fr]=Pour rechercher une adresse, il suffit d'écrire l'adresse souhaitée dans la barre de recherche du plugin.
+    Pour de meilleurs résultats, entrez un numéro de maison, un nom de rue et le code postal.
+    Vous pouvez également récupérez l'adresse en fonction des coordonnées en activant l'outil' "Cliquer sur la carte pour capturer une adresse".
+    Le curseur se changera en croix et vous pourrez commencer la saisie.
 
 tracker=https://github.com/Gui0delp/french_address/issues
 repository=https://github.com/Gui0delp/french_address
@@ -31,7 +29,7 @@ repository=https://github.com/Gui0delp/french_address
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
 changelog=1.1.0
-    - add posibily to view more details from the result
+    - now you can view more details from result
     - redesign of the capture tool
     - add tool to show address on the web browser
     - add tool for copy result into clipboard
