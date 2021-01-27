@@ -17,8 +17,7 @@ exemple de saisie: **8 Boulevard du Port 80000**
 
 Vous pouvez aussi en cliquant sur le canevas récupérer l'adresse selon les coordonnées (activer l'outil: "Localiser sur la carte."). Le curseur se changera en croix et vous pourrez commencer la saisie.
 
-![Représentation du plugin avec l'outil activé](/figure_1.jpg)
-
+![Représentation du plugin avec l'outil activé](figure_1.jpg)
 
 ## Documentation
 
