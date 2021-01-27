@@ -1,11 +1,13 @@
 """
 Manage the api address
 """
-from qgis.core import Qgis, QgsMessageLog
-from urllib.request import urlopen
+import sys
 import urllib.parse
 import json
 import ssl
+from urllib.request import urlopen
+from qgis.core import Qgis, QgsMessageLog
+from PyQt5.Qt import QApplication, QUrl, QDesktopServices
 
 
 class ApiAddress:
@@ -13,8 +15,10 @@ class ApiAddress:
         url: https://geo.api.gouv.fr/adresse
     """
     def __init__(self):
+        self.zoom_to_map = 19
         self.reverse_url = "https://api-adresse.data.gouv.fr/reverse/"
         self.search_url = "https://api-adresse.data.gouv.fr/search/"
+        self.map_url = "https://adresse.data.gouv.fr/base-adresse-nationale/"
         self.url = ""
         self.response = ""
         self.json_data = ""
@@ -37,6 +41,18 @@ class ApiAddress:
         lat = str(latitude)
         self.url = self.reverse_url + '?lon=' + lon + '&lat=' + lat
         return self.url
+
+    def set_map_url(self, longitude_house, latitude_house, id_house):
+        """Set the reverse url with the longitude and latitude"""
+        lon = str(longitude_house)
+        lat = str(latitude_house)
+        id = id_house
+        url_for_map = self.map_url + str(id) + '#' + str(self.zoom_to_map) + '/' + lon + '/' + lat
+        return url_for_map
+
+    def open_map_url(self, url_for_map):
+        url = QUrl(url_for_map)
+        QDesktopServices.openUrl(url)
 
     def test_request(self):
         """test if the request is OK"""
