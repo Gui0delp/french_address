@@ -47,7 +47,7 @@ class ApiAddress:
         lon = str(longitude_house)
         lat = str(latitude_house)
         id = id_house
-        url_for_map = self.map_url + str(id) + '#' + str(self.zoom_to_map) + '/' + lon + '/' + lat
+        url_for_map = self.map_url + str(id) + '#' + str(self.zoom_to_map) + '/' + lat + '/' + lon
         return url_for_map
 
     def open_map_url(self, url_for_map):
