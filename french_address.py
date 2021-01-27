@@ -258,12 +258,14 @@ class FrenchAddress:
             id_house = self.data_from_api['features'][0]['properties']['id']
             url = self.api_address.set_map_url(longitude_house, latitude_house, id_house)
             self.api_address.open_map_url(url)
+            message = f' Open in web browser {url}'
         except:
-            message = ' Nothing to open in browser'
-            self.iface.messageBar().pushMessage('Address',
-                                                message,
-                                                level=Qgis.Info,
-                                                )
+            message = ' Nothing to open in web browser'
+
+        self.iface.messageBar().pushMessage('Address',
+                                            message,
+                                            level=Qgis.Info,
+                                            )
 
     def set_connections(self):
         self.dockwidget.tb_catch_tool.clicked.connect(
