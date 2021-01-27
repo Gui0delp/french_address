@@ -230,6 +230,12 @@ class FrenchAddress:
                     self.coord.set_x_transform_reverse()
                     self.coord.set_latitude_longitude_crs(point_wgs84)
                     self.coord.zoom_to_canvas(self.canvas)
+            else:
+                message = ' Format of the address is not correct, please check log message.'
+                self.iface.messageBar().pushMessage('Warning',
+                                                    message,
+                                                    level=Qgis.Warning,
+                                                    )
 
     def set_visible_properties(self, state):
 
