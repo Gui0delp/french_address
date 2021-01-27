@@ -5,12 +5,22 @@
 [general]
 name=French Address
 qgisMinimumVersion=3.4
-description=French address search and location.
-version=1.0
+description=Search and location based on the <a href="https://geo.api.gouv.fr/adresse">API BAN</a> provided by the French government .
+description[fr]=Recherche et localisation basées sur <a href="https://geo.api.gouv.fr/adresse">l'API BAN</a> fournie par le gouvernement français.
+version=1.1.0
 author=Guillaume DELPLANQUE
 email=delpro.guillaume@gmail.com
 
-about=The plugin uses the API provided by the French government (url: https://geo.api.gouv.fr/adresse). The goal is to find or locate addresses on French territory. To search, it's simple, just write the desired address in the search bar. For best results, enter a number, a street name and the postal code. You can also by clicking on the canvas (activate the tool: "Locate on the map.") Recover the address according to the coordinates.
+about=The goal is to find or locate addresses on French territory.
+    To search, it's simple, just write the desired address in the search bar of the plugin.
+    For best results, enter a number, a street name and the postal code.
+    You can also clicking on the canvas (activate the tool: "Click on the map to capture an address ")
+    Recover the address according to the coordinates.
+about[fr]=Le but est de trouver ou localiser des adresses sur le territoire français.
+     Pour rechercher, c'est simple, il suffit d'écrire l'adresse souhaitée dans la barre de recherche du plugin.
+     Pour de meilleurs résultats, entrez un numéro, un nom de rue et le code postal.
+     Vous pouvez également cliquer sur le canevas (activer l'outil': "Cliquer sur la carte pour capturer une adresse")
+     Récupérez l'adresse en fonction des coordonnées.
 
 tracker=https://github.com/Gui0delp/french_address/issues
 repository=https://github.com/Gui0delp/french_address
@@ -20,10 +30,15 @@ repository=https://github.com/Gui0delp/french_address
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-# changelog=
+changelog=1.1.0
+    - add posibily to view more details from the result
+    - redesign of the capture tool
+    - add tool to show address on the web browser
+    - add tool for copy result into clipboard
 
 # Tags are comma separated with spaces allowed
-tags=python, webservice, adresse, addresse, api, gouvernement, france, french
+tags=search, address, api, government, french, ban,
+tags[fr]=recherche, adresse, api, gouvernement, france, ban,
 
 homepage=https://github.com/Gui0delp/french_address
 category=Plugins
