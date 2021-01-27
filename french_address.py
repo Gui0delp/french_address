@@ -82,7 +82,7 @@ class FrenchAddress:
         self.catch_tool_activate = False
         self.catch_tool_icon = QgsApplication.iconPath("cursors/mCapturePoint.svg")
         self.copy_icon = QgsApplication.iconPath("mActionEditCopy.svg")
-        self.show_url_icon = QgsApplication.iconPath("mLayoutItemMap.svg")
+        self.show_url_icon = QgsApplication.iconPath("mIconWms.svg")
         self.clipboard = QApplication.clipboard()
 
     # noinspection PyMethodMayBeStatic
