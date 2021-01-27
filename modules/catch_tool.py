@@ -36,6 +36,8 @@ class CatchTool(QgsMapTool):
             if self.api_address.take_reverse_response_label():
                 response_label = self.api_address.take_reverse_response_label()
                 response_properties = self.api_address.take_reverse_response_properties()
+                response_coordinates = self.api_address.take_reverse_response_coordinates()
+                response_properties.update(response_coordinates)
                 self.dialog.le_input_address.setText(response_label)
                 self.populate_table_widget(response_properties)
             else:

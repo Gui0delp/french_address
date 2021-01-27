@@ -29,6 +29,7 @@ class ApiAddress:
         self.dictionnary_data = {}
         self.reverse_label = {}
         self.reverse_properties = {}
+        self.reverse_coordinates = {}
 
         self.error_message_no_address_locate = "No address found at this coordinates"
         self.error_message_no_address_found = "There is no address with this entry"
@@ -95,6 +96,16 @@ class ApiAddress:
             self.reverse_properties = \
             self.dictionnary_data['features'][0]['properties']
             return self.reverse_properties
+        except:
+            self.message_log(self.error_message_no_address_locate)
+            return False
+
+    def take_reverse_response_coordinates(self):
+        """Return the label of the request"""
+        try:
+            self.reverse_coordinates = \
+            self.dictionnary_data['features'][0]['geometry']
+            return self.reverse_coordinates
         except:
             self.message_log(self.error_message_no_address_locate)
             return False
