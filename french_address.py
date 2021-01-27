@@ -77,10 +77,12 @@ class FrenchAddress:
         self.pluginIsActive = False
         self.dockwidget = None
 
+        self.data_from_api = ""
         self.tool = None
         self.catch_tool_activate = False
         self.catch_tool_icon = QgsApplication.iconPath("cursors/mCapturePoint.svg")
         self.copy_icon = QgsApplication.iconPath("mActionEditCopy.svg")
+        self.show_url_icon = QgsApplication.iconPath("mLayoutItemMap.svg")
         self.clipboard = QApplication.clipboard()
 
     # noinspection PyMethodMayBeStatic
@@ -249,6 +251,20 @@ class FrenchAddress:
                                             level=Qgis.Info,
                                             )
 
+    def open_map_url(self):
+        try:
+            latitude_house = self.data_from_api['features'][0]['geometry']['coordinates'][1]
+            longitude_house = self.data_from_api['features'][0]['geometry']['coordinates'][0]
+            id_house = self.data_from_api['features'][0]['properties']['id']
+            url = self.api_address.set_map_url(longitude_house, latitude_house, id_house)
+            self.api_address.open_map_url(url)
+        except:
+            message = ' Nothing to open in browser'
+            self.iface.messageBar().pushMessage('Address',
+                                                message,
+                                                level=Qgis.Info,
+                                                )
+
     def set_connections(self):
         self.dockwidget.tb_catch_tool.clicked.connect(
             self.enable_disable_catch_tool
@@ -261,6 +277,9 @@ class FrenchAddress:
             )
         self.dockwidget.pb_copy.clicked.connect(
             self.copy_to_clipboard
+            )
+        self.dockwidget.tb_open_url.clicked.connect(
+            self.open_map_url
             )
 
     def run(self):
@@ -277,6 +296,7 @@ class FrenchAddress:
                 self.api_address = ApiAddress()
                 self.dockwidget.tb_catch_tool.setIcon(QIcon(self.catch_tool_icon))
                 self.dockwidget.pb_copy.setIcon(QIcon(self.copy_icon))
+                self.dockwidget.tb_open_url.setIcon(QIcon(self.show_url_icon))
                 self.set_connections()
 
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
