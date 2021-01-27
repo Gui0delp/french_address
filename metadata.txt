@@ -17,7 +17,7 @@ about=To search for an address, simply write the desired address in the plugin's
     The cursor will change to a cross and you can start typing.
 about[fr]=Pour rechercher une adresse, il suffit d'écrire l'adresse souhaitée dans la barre de recherche du plugin.
     Pour de meilleurs résultats, entrez un numéro de maison, un nom de rue et le code postal.
-    Vous pouvez également récupérez l'adresse en fonction des coordonnées en activant l'outil' "Cliquer sur la carte pour capturer une adresse".
+    Vous pouvez également récupérez l'adresse en fonction des coordonnées en activant l'outil' "Cliquez sur la carte pour capturer une adresse".
     Le curseur se changera en croix et vous pourrez commencer la saisie.
 
 tracker=https://github.com/Gui0delp/french_address/issues

@@ -1,9 +1,9 @@
 """
 Manage the addresses
 """
-
 import re
 from qgis.core import Qgis, QgsMessageLog
+from qgis.PyQt.QtCore import QTranslator, QCoreApplication
 
 
 class Address:
@@ -19,22 +19,22 @@ class Address:
         self.address_entry = ""
         self.entry = ""
 
+    def tr(self, message):
+        return QCoreApplication.translate('FrenchAddress', message)
+
     def test_address_entry(self, entry):
         """Test the entry return True if the address format is correct"""
-
         if re.match(self.pattern_address, str(entry)) is not None:
             self.address_entry = entry
             self.entry = re.match(self.pattern_address, str(entry))
             flag = True
         else:
-            self.message_log('Le format de l\'adresse n\'est pas respecté \n \
-                exemple: 20 Avenue de Ségur 75007 Paris')
+            self.message_log(self.tr('The address format is not respected example: 20 Avenue de Ségur 75007 Paris'))
             flag = False
         return flag
 
     def format_address_entry(self):
         """format the address entry"""
-
         self.house_number = str(self.entry.group('num'))
         self.name_road = str(self.entry.group('name'))
         self.postcode = str(self.entry.group('city_code'))
@@ -42,27 +42,21 @@ class Address:
 
     def test_obligatory_field(self):
         """test the presence of the obligatory field"""
-
         test = True
-
         if not self.house_number:
             test = False
-            self.message_log('Il faut un numéro de rue \n \
-                exemple: 20 Avenue de Ségur 75007')
+            self.message_log(self.tr('You need a house number example: 20 Avenue de Ségur 75007'))
 
         if not self.name_road:
             test = False
-            self.message_log('Il manques un nom de rue \n \
-                exemple: 20 Avenue de Ségur 75007')
+            self.message_log(self.tr('Missing a street name example: 20 Avenue de Ségur 75007'))
 
         if not self.postcode:
             test = False
-            self.message_log('Il manques le code postal \n \
-                exemple: 20 Avenue de Ségur 75007')
+            self.message_log(self.tr('The postal code is missing example: 20 Avenue de Ségur 75007'))
 
         if test:
-            self.message_log(f'L\'adresse {self.address_entry}, est complète')
-
+            self.message_log(self.tr('Address is complete'))
         return test
 
     def message_log(self, msg=""):

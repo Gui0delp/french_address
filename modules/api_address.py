@@ -1,7 +1,6 @@
 """
 Manage the api address
 """
-import sys
 import urllib.parse
 import json
 import ssl
@@ -9,6 +8,7 @@ from urllib.request import urlopen
 from qgis.core import Qgis, QgsMessageLog
 from qgis.PyQt.QtWidgets import QTableWidgetItem
 from PyQt5.Qt import QApplication, QUrl, QDesktopServices
+from qgis.PyQt.QtCore import QTranslator, QCoreApplication
 
 
 class ApiAddress:
@@ -33,10 +33,13 @@ class ApiAddress:
         self.reverse_properties = {}
         self.reverse_coordinates = {}
 
-        self.error_message_no_address_locate = "No address found at this coordinates"
-        self.error_message_no_address_found = "There is no address with this entry"
-        self.error_message_connection = 'The connection failed'
-        self.success_message_connection = 'Connection established'
+        self.error_message_no_address_locate = self.tr("No address found at this coordinates")
+        self.error_message_no_address_found = self.tr("There is no address with this entry")
+        self.error_message_connection = self.tr('The connection failed')
+        self.success_message_connection = self.tr('Connection established')
+
+    def tr(self, message):
+        return QCoreApplication.translate('FrenchAddress', message)
 
     def set_reverse_url(self, longitude, latitude):
         """Set the reverse url with the longitude and latitude"""
@@ -139,8 +142,10 @@ class ApiAddress:
         self.dialog.tw_details.clear()
         self.dialog.tw_details.setRowCount(0)
         self.dialog.tw_details.setColumnCount(2)
-        self.dialog.tw_details.setHorizontalHeaderItem(0, QTableWidgetItem("attribute"))
-        self.dialog.tw_details.setHorizontalHeaderItem(1, QTableWidgetItem("value"))
+        head_attribute = self.tr("attribute")
+        head_value = self.tr("value")
+        self.dialog.tw_details.setHorizontalHeaderItem(0, QTableWidgetItem(head_attribute))
+        self.dialog.tw_details.setHorizontalHeaderItem(1, QTableWidgetItem(head_value))
 
     def populate_table_widget(self, datas):
         self.dialog.tw_details.setRowCount(len(datas))
