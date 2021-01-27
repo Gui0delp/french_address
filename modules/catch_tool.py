@@ -7,12 +7,12 @@ from .api_address import ApiAddress
 
 
 class CatchTool(QgsMapTool):
-    def __init__(self, iface, dialog, fr_ad_instance):
+    def __init__(self, iface, dialog, fr_address_instance):
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.canvas = iface.mapCanvas()
         self.iface = iface
         self.dialog = dialog
-        self.fr_ad_instance = fr_ad_instance
+        self.fr_address_instance = fr_address_instance
         self.coord = Coordinates(self.dialog)
         self.api_address = ApiAddress()
 
@@ -30,7 +30,8 @@ class CatchTool(QgsMapTool):
         if self.api_address.test_request():
             self.api_address.set_request()
             self.api_address.decode_response()
-            self.api_address.json_to_dictionnary()
+            data = self.api_address.json_to_dictionnary()
+            self.fr_address_instance.data_from_api = data
             self.initialize_table_widget()
             if self.api_address.take_reverse_response_label():
                 response_label = self.api_address.take_reverse_response_label()
@@ -56,8 +57,8 @@ class CatchTool(QgsMapTool):
         QgsMapTool.deactivate(self)
         self.dialog.tb_catch_tool.setChecked(False)
         self.dialog.pb_locate_search.setEnabled(True)
-        self.fr_ad_instance.catch_tool_activate = False
-        self.fr_ad_instance.tool = None
+        self.fr_address_instance.catch_tool_activate = False
+        self.fr_address_instance.tool = None
         self.deactivated.emit()
 
     def initialize_table_widget(self):
