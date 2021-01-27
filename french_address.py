@@ -240,7 +240,7 @@ class FrenchAddress:
 
     def copy_to_clipboard(self):
         text_to_copy = self.dockwidget.le_input_address.toPlainText()
-        message = ' Nothing copying to the clipboard'
+        message = ' Nothing to copying'
 
         if text_to_copy != '':
             self.clipboard.setText(text_to_copy)
