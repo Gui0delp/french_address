@@ -198,7 +198,7 @@
        </size>
       </property>
       <property name="toolTip">
-       <string>Show in 'adresse.data.gouv.fr'</string>
+       <string>Show address in 'adresse.data.gouv.fr'</string>
       </property>
       <property name="text">
        <string>...</string>
