@@ -7,6 +7,7 @@ import json
 import ssl
 from urllib.request import urlopen
 from qgis.core import Qgis, QgsMessageLog
+from qgis.PyQt.QtWidgets import QTableWidgetItem
 from PyQt5.Qt import QApplication, QUrl, QDesktopServices
 
 
@@ -14,7 +15,8 @@ class ApiAddress:
     """ This class manage the methods for api
         url: https://geo.api.gouv.fr/adresse
     """
-    def __init__(self):
+    def __init__(self, dialog=None):
+        self.dialog = dialog
         self.zoom_to_map = 19
         self.reverse_url = "https://api-adresse.data.gouv.fr/reverse/"
         self.search_url = "https://api-adresse.data.gouv.fr/search/"
@@ -132,6 +134,22 @@ class ApiAddress:
             self.message_log(self.error_message_no_address_found)
 
         return self.search_label
+
+    def initialize_table_widget(self):
+        self.dialog.tw_details.clear()
+        self.dialog.tw_details.setRowCount(0)
+        self.dialog.tw_details.setColumnCount(2)
+        self.dialog.tw_details.setHorizontalHeaderItem(0, QTableWidgetItem("attribute"))
+        self.dialog.tw_details.setHorizontalHeaderItem(1, QTableWidgetItem("value"))
+
+    def populate_table_widget(self, datas):
+        self.dialog.tw_details.setRowCount(len(datas))
+
+        i = 0
+        for attribute, value in datas.items():
+            self.dialog.tw_details.setItem(i, 0, QTableWidgetItem(str(attribute)))
+            self.dialog.tw_details.setItem(i, 1, QTableWidgetItem(str(value)))
+            i += 1
 
     def message_log(self, msg=""):
         QgsMessageLog.logMessage('{} {}'.format(self.__class__.__name__, msg), 'FrenchAddress', Qgis.Info)

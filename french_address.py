@@ -26,7 +26,7 @@ import os.path
 from qgis.core import QgsApplication, Qgis
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon, QCursor, QPixmap
-from qgis.PyQt.QtWidgets import QAction, QApplication
+from qgis.PyQt.QtWidgets import QAction, QApplication, QTableWidgetItem
 from .modules.catch_tool import CatchTool
 from .modules.coordinates import Coordinates
 from .modules.address import Address
@@ -222,7 +222,12 @@ class FrenchAddress:
                 if self.api_address.test_request():
                     self.api_address.set_request()
                     self.api_address.decode_response()
-                    self.api_address.json_to_dictionnary()
+                    self.data_from_api = self.api_address.json_to_dictionnary()
+                    self.api_address.initialize_table_widget()
+                    response_properties = self.api_address.take_reverse_response_properties()
+                    response_coordinates = self.api_address.take_reverse_response_coordinates()
+                    response_properties.update(response_coordinates)
+                    self.api_address.populate_table_widget(response_properties)
                     point_wgs84 = self.api_address.take_search_response_label()
                     self.coord.set_canvas_project(self.canvas)
                     self.coord.set_destination_crs()
@@ -301,7 +306,7 @@ class FrenchAddress:
                 self.dockwidget.tw_details.setVisible(False)
                 self.coord = Coordinates(self.dockwidget)
                 self.address = Address(self.dockwidget)
-                self.api_address = ApiAddress()
+                self.api_address = ApiAddress(self.dockwidget)
                 self.dockwidget.tb_catch_tool.setIcon(QIcon(self.catch_tool_icon))
                 self.dockwidget.pb_copy.setIcon(QIcon(self.copy_icon))
                 self.dockwidget.tb_open_url.setIcon(QIcon(self.show_url_icon))
