@@ -162,7 +162,7 @@
        </size>
       </property>
       <property name="toolTip">
-       <string>Copy to clipboard</string>
+       <string>Copy result to clipboard</string>
       </property>
       <property name="text">
        <string comment="Copy to clipboard" extracomment="Copy to clipboard">...</string>
@@ -198,7 +198,7 @@
        </size>
       </property>
       <property name="toolTip">
-       <string>Show address in 'adresse.data.gouv.fr'</string>
+       <string>Show address on website 'adresse.data.gouv.fr'</string>
       </property>
       <property name="text">
        <string>...</string>
