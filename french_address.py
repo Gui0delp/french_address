@@ -190,11 +190,10 @@ class FrenchAddress:
 
     def enable_disable_catch_tool(self):
         if not self.catch_tool_activate:
-            if self.tool is None:
-                self.tool = CatchTool(self.iface, self.dockwidget, self)
-                self.canvas.setMapTool(self.tool)
-                self.canvas.setCursor(QCursor(QPixmap(self.catch_tool_icon)))
-                self.catch_tool_activate = True
+            self.tool = CatchTool(self.iface, self.dockwidget, self)
+            self.canvas.setMapTool(self.tool)
+            self.canvas.setCursor(QCursor(QPixmap(self.catch_tool_icon)))
+            self.catch_tool_activate = True
             self.dockwidget.pb_locate_search.setEnabled(False)
             self.dockwidget.tb_catch_tool.setChecked(True)
         else:
