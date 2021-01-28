@@ -58,13 +58,14 @@ class CatchTool(QgsMapTool):
                                             message,
                                             level=Qgis.Info,
                                             )
+        self.dialog.tb_catch_tool.setChecked(True)
+        self.fr_address_instance.catch_tool_activate = True
 
     def deactivate(self):
         QgsMapTool.deactivate(self)
         self.dialog.tb_catch_tool.setChecked(False)
         self.dialog.pb_locate_search.setEnabled(True)
         self.fr_address_instance.catch_tool_activate = False
-        self.fr_address_instance.tool = None
         self.deactivated.emit()
 
     def message_log(self, msg=""):
