@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fr" sourcelanguage="fr">
+<TS version="2.1" language="fr">
 <context>
     <name>Address</name>
+    <message>
+        <location filename="address.py" line="33"/>
+        <source>The address format is not respected
+ 
+                example: 20 Avenue de SÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©gur 75007 Paris</source>
+        <translation type="obsolete">Le format de l&apos;adresse n&apos;est pas respecté
+ 
+                exemple: 20 Avenue de Ségur 75007 Paris</translation>
+    </message>
+    <message>
+        <location filename="address.py" line="50"/>
+        <source>You need a house number
+ 
+                example: 20 Avenue de SÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©gur 75007</source>
+        <translation type="obsolete">Vous avez besoin d&apos;un numéro de maison 
+ 
+                exemple: 20 Avenue de Ségur 75007</translation>
+    </message>
+    <message>
+        <location filename="address.py" line="55"/>
+        <source>Missing a street name
+ 
+                example: 20 Avenue de SÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©gur 75007</source>
+        <translation type="obsolete">Il manque un nom de rue 
+ 
+                exemple: 20 Avenue de Ségur 75007</translation>
+    </message>
+    <message>
+        <location filename="address.py" line="60"/>
+        <source>The postal code is missing
+ 
+                example: 20 Avenue de SÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ©gur 75007</source>
+        <translation type="obsolete">Le code postal est manquant 
+ 
+                exemple: 20 Avenue de Ségur 75007</translation>
+    </message>
     <message>
         <location filename="address.py" line="33"/>
         <source>The address format is not respected
@@ -76,40 +112,29 @@
                 exemple: 20 Avenue de Ségur 75007</translation>
     </message>
     <message>
-        <location filename="address.py" line="33"/>
-        <source>The address format is not respected
- 
-                example: 20 Avenue de SÃÂÃÂ©gur 75007 Paris</source>
-        <translation type="obsolete">Le format de l&apos;adresse n&apos;est pas respecté
- 
-                exemple: 20 Avenue de Ségur 75007 Paris</translation>
+        <location filename="address.py" line="32"/>
+        <source>The address format is not respected example: 20 Avenue de SÃÂ©gur 75007 Paris</source>
+        <translation type="obsolete">Le format de l&apos;adresse n&apos;est pas respecté exemple: 20 Avenue de Ségur 75007 Paris</translation>
     </message>
     <message>
-        <location filename="address.py" line="50"/>
-        <source>You need a house number
- 
-                example: 20 Avenue de SÃÂÃÂ©gur 75007</source>
-        <translation type="obsolete">Vous avez besoin d&apos;un numéro de maison 
- 
-                exemple: 20 Avenue de Ségur 75007</translation>
+        <location filename="address.py" line="48"/>
+        <source>You need a house number example: 20 Avenue de SÃÂ©gur 75007</source>
+        <translation type="obsolete">Vous avez besoin d&apos;un numéro de maison exemple: 20 Avenue de Ségur 75007</translation>
     </message>
     <message>
-        <location filename="address.py" line="55"/>
-        <source>Missing a street name
- 
-                example: 20 Avenue de SÃÂÃÂ©gur 75007</source>
-        <translation type="obsolete">Il manque un nom de rue 
- 
-                exemple: 20 Avenue de Ségur 75007</translation>
+        <location filename="address.py" line="52"/>
+        <source>Missing a street name example: 20 Avenue de SÃÂ©gur 75007</source>
+        <translation type="obsolete">Il manque un nom de rue exemple: 20 Avenue de Ségur 75007</translation>
     </message>
     <message>
-        <location filename="address.py" line="60"/>
-        <source>The postal code is missing
- 
-                example: 20 Avenue de SÃÂÃÂ©gur 75007</source>
-        <translation type="obsolete">Le code postal est manquant 
- 
-                exemple: 20 Avenue de Ségur 75007</translation>
+        <location filename="address.py" line="56"/>
+        <source>The postal code is missing example: 20 Avenue de SÃÂ©gur 75007</source>
+        <translation type="obsolete">Le code postal est manquant exemple: 20 Avenue de Ségur 75007</translation>
+    </message>
+    <message>
+        <location filename="address.py" line="59"/>
+        <source>Address is complete</source>
+        <translation>L&apos;adresse est complète</translation>
     </message>
     <message>
         <location filename="address.py" line="32"/>
@@ -131,43 +156,38 @@
         <source>The postal code is missing example: 20 Avenue de SÃ©gur 75007</source>
         <translation>Le code postal est manquant exemple: 20 Avenue de Ségur 75007</translation>
     </message>
-    <message>
-        <location filename="address.py" line="59"/>
-        <source>Address is complete</source>
-        <translation>L&apos;adresse est complète</translation>
-    </message>
 </context>
 <context>
     <name>ApiAddress</name>
     <message>
         <location filename="api_address.py" line="37"/>
         <source>No address found at this coordinates</source>
-        <translation>Aucune adresse trouvée à ces coordonnées</translation>
+        <translation type="obsolete">Aucune adresse trouvée à ces coordonnées</translation>
     </message>
     <message>
         <location filename="api_address.py" line="38"/>
         <source>There is no address with this entry</source>
-        <translation>Il n&apos;y a pas d&apos;adresse avec c&apos;est valeurs</translation>
+        <translation type="obsolete">Il n&apos;y a pas d&apos;adresse avec c&apos;est valeurs</translation>
     </message>
     <message>
         <location filename="api_address.py" line="39"/>
         <source>The connection failed</source>
-        <translation>La connexion a échoué</translation>
+        <translation type="obsolete">La connexion a échoué</translation>
     </message>
     <message>
         <location filename="api_address.py" line="41"/>
         <source>Connection established</source>
-        <translation>Connection établie</translation>
+        <translation type="obsolete">Connection établie</translation>
     </message>
     <message>
         <location filename="api_address.py" line="146"/>
         <source>attribute</source>
-        <translation>attribut</translation>
+        <translation type="obsolete">attribut</translation>
     </message>
     <message>
         <location filename="api_address.py" line="147"/>
         <source>value</source>
-        <translation>valeur</translation>
+        <translation type="obsolete">valeur</translation>
     </message>
 </context>
 <context>
@@ -186,22 +206,22 @@
 <context>
     <name>FrenchAddress</name>
     <message>
-        <location filename="french_address.py" line="239"/>
+        <location filename="french_address.py" line="238"/>
         <source> Format of the address is not correct, please check log message.</source>
         <translation> Le format de l&apos;adresse n&apos;est pas correct, veuillez vérifier le message du journal.</translation>
     </message>
     <message>
-        <location filename="french_address.py" line="255"/>
+        <location filename="french_address.py" line="254"/>
         <source> Nothing to copying</source>
         <translation> Rien à copier</translation>
     </message>
     <message>
-        <location filename="french_address.py" line="276"/>
+        <location filename="french_address.py" line="275"/>
         <source> Nothing to open in web browser</source>
         <translation> Rien à ouvrir dans le navigateur Web</translation>
     </message>
     <message>
-        <location filename="french_address.py" line="272"/>
+        <location filename="french_address.py" line="271"/>
         <source> Open in web browser </source>
         <translation> Ouvertr dans le navigateur Web </translation>
     </message>
@@ -221,7 +241,7 @@
     <message>
         <location filename="french_address_dockwidget_base.ui" line="49"/>
         <source>Search</source>
-        <translation>Chercher</translation>
+        <translation type="obsolete">Chercher</translation>
     </message>
     <message>
         <location filename="french_address_dockwidget_base.ui" line="74"/>
@@ -268,6 +288,11 @@
         <location filename="french_address_dockwidget_base.ui" line="201"/>
         <source>Show address on website &apos;adresse.data.gouv.fr&apos;</source>
         <translation>Afficher l&apos;adresse sur le site &apos;adresse.data.gouv.fr&apos;</translation>
+    </message>
+    <message>
+        <location filename="french_address_dockwidget_base.ui" line="49"/>
+        <source>Research</source>
+        <translation>Rechercher</translation>
     </message>
 </context>
 </TS>
