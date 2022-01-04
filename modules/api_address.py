@@ -28,7 +28,7 @@ class ApiAddress:
         self.url = ""
         self.content = ""
         self.json_data = ""
-        self.search_label = ""
+        self.search_coordinates = ""
         self.my_context = ssl._create_unverified_context()
         self.latitude = ""
         self.longitude = ""
@@ -138,15 +138,14 @@ class ApiAddress:
                                     + '&autocomplete=1'
         return self.url
 
-    def take_search_response_label(self):
-        """Return the label of the request"""
+    def take_search_response_coordinates(self):
+        """Return the coordinates of the request"""
         try:
-            self.search_label = \
-            self.dictionnary_data['features'][0]['geometry']['coordinates']
+            self.search_coordinates = self.dictionnary_data['features'][0]['geometry']['coordinates']
         except:
             self.message_log(self.error_message_no_address_found)
 
-        return self.search_label
+        return self.search_coordinates
 
     def initialize_table_widget(self):
         self.dialog.tw_details.clear()
