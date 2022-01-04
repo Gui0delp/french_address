@@ -83,6 +83,7 @@ class FrenchAddress:
         self.catch_tool_icon = QgsApplication.iconPath("cursors/mCapturePoint.svg")
         self.copy_icon = QgsApplication.iconPath("mActionEditCopy.svg")
         self.show_url_icon = QgsApplication.iconPath("mIconWms.svg")
+        self.result_setting_icon = QgsApplication.iconPath("mActionOptions.svg")
         self.clipboard = QApplication.clipboard()
 
     # noinspection PyMethodMayBeStatic
@@ -309,6 +310,7 @@ class FrenchAddress:
                 self.dockwidget.tb_catch_tool.setIcon(QIcon(self.catch_tool_icon))
                 self.dockwidget.pb_copy.setIcon(QIcon(self.copy_icon))
                 self.dockwidget.tb_open_url.setIcon(QIcon(self.show_url_icon))
+                self.dockwidget.tb_result_setting.setIcon(QIcon(self.result_setting_icon))
                 self.set_connections()
 
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
