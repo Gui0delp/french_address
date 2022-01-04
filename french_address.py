@@ -226,7 +226,7 @@ class FrenchAddress:
                     response_coordinates = self.api_address.take_reverse_response_coordinates()
                     response_properties.update(response_coordinates)
                     self.api_address.populate_table_widget(response_properties)
-                    point_wgs84 = self.api_address.take_search_response_label()
+                    point_wgs84 = self.api_address.take_search_response_coordinates()
                     self.coord.set_canvas_project(self.canvas)
                     self.coord.set_destination_crs()
                     self.coord.take_crs_from_project(self.iface)
