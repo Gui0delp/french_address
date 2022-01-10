@@ -1,7 +1,6 @@
 """Manage the tool"""
 from qgis.gui import QgsMapTool
 from qgis.core import Qgis, QgsMessageLog
-from qgis.PyQt.QtCore import QTranslator, QCoreApplication
 from .coordinates import Coordinates
 from .api_address import ApiAddress
 
@@ -15,9 +14,6 @@ class CatchTool(QgsMapTool):
         self.fr_address_instance = fr_address_instance
         self.coord = Coordinates(self.dialog)
         self.api_address = ApiAddress(self.dialog)
-
-    def tr(self, message):
-        return QCoreApplication.translate('FrenchAddress', message)
 
     def canvasReleaseEvent(self, event):
         x = event.pos().x()
@@ -44,7 +40,7 @@ class CatchTool(QgsMapTool):
                 self.dialog.le_input_address.setText(response_label)
                 self.api_address.populate_table_widget(response_properties)
             else:
-                message = self.tr(' no address found at this coordinates ')
+                message = "Pas d'adresse trouvé avec ces coordonnées"
                 message_error = message + f'EPSG:4326 lon,lat = {self.coord.longitude},{self.coord.latitude}'
                 self.message_log(message_error)
                 self.iface.messageBar().pushMessage('Warning',
@@ -53,7 +49,7 @@ class CatchTool(QgsMapTool):
                                                     )
 
     def activate(self):
-        message = self.tr(' click on the map to capture an address...')
+        message = " cliquer sur la carte pour capturer l'adresse..."
         self.iface.messageBar().pushMessage('Info',
                                             message,
                                             level=Qgis.Info,

@@ -34,6 +34,7 @@ from .modules.api_address import ApiAddress
 from .resources import *
 
 from .french_address_dockwidget import FrenchAddressDockWidget
+from .french_address_widget_result_setting import FrenchAddressWidgetResultSetting
 
 
 class FrenchAddress:
@@ -76,6 +77,7 @@ class FrenchAddress:
         #print "** INITIALIZING FrenchAddress"
         self.pluginIsActive = False
         self.dockwidget = None
+        self.widgetResultSetting = None
 
         self.data_from_api = ""
         self.tool = None
@@ -235,7 +237,7 @@ class FrenchAddress:
                     self.coord.set_latitude_longitude_crs(point_wgs84)
                     self.coord.zoom_to_canvas(self.canvas)
             else:
-                message = self.tr(' Format of the address is not correct, please check log message.')
+                message = ' Le format de l\'adresse est incorrecte'
                 self.iface.messageBar().pushMessage('Warning',
                                                     message,
                                                     level=Qgis.Warning,
@@ -250,11 +252,11 @@ class FrenchAddress:
 
     def copy_to_clipboard(self):
         text_to_copy = self.dockwidget.le_input_address.toPlainText()
-        message = self.tr(' Nothing to copying')
+        message = ' Rien à copier'
 
         if text_to_copy != '':
             self.clipboard.setText(text_to_copy)
-            message = self.tr(f' {text_to_copy}, copied to the clipboard')
+            message = f' {text_to_copy}, copié dans le presse papier'
 
         self.iface.messageBar().pushMessage('Address',
                                             message,
@@ -268,10 +270,10 @@ class FrenchAddress:
             id_house = self.data_from_api['features'][0]['properties']['id']
             url = self.api_address.set_map_url(longitude_house, latitude_house, id_house)
             self.api_address.open_map_url(url)
-            text = self.tr(' Open in web browser ')
+            text = ' Ouvert dans le navigateur '
             message = text + f'{url}'
         except:
-            message = self.tr(' Nothing to open in web browser')
+            message = ' Rien à ouvrir dans le navigateur'
 
         self.iface.messageBar().pushMessage('Address',
                                             message,
@@ -294,6 +296,16 @@ class FrenchAddress:
         self.dockwidget.tb_open_url.clicked.connect(
             self.open_map_url
             )
+        self.dockwidget.tb_result_setting.clicked.connect(
+            self.show_result_setting
+            )
+
+    def show_result_setting(self):
+
+        if self.widgetResultSetting is None:
+            self.widgetResultSetting = FrenchAddressWidgetResultSetting()
+
+        self.widgetResultSetting.show()
 
     def run(self):
         """Run method that loads and starts the plugin"""

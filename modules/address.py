@@ -29,7 +29,7 @@ class Address:
             self.entry = re.match(self.pattern_address, str(entry))
             flag = True
         else:
-            self.message_log(self.tr('The address format is not respected example: 20 Avenue de Ségur 75007 Paris'))
+            self.message_log("Le format de l'adresse n'ai pas respecté, exemple: 20 Avenue de Ségur 75007 Paris")
             flag = False
         return flag
 
@@ -45,18 +45,18 @@ class Address:
         test = True
         if not self.house_number:
             test = False
-            self.message_log(self.tr('You need a house number example: 20 Avenue de Ségur 75007'))
+            self.message_log("Vous devez avoir un numéro de rue, exemple: 20 Avenue de Ségur 75007")
 
         if not self.name_road:
             test = False
-            self.message_log(self.tr('Missing a street name example: 20 Avenue de Ségur 75007'))
+            self.message_log("Il manque un nom de rue, exemple: 20 Avenue de Ségur 75007")
 
         if not self.postcode:
             test = False
-            self.message_log(self.tr('The postal code is missing example: 20 Avenue de Ségur 75007'))
+            self.message_log("Le code postal est manquant, exemple: 20 Avenue de Ségur 75007")
 
         if test:
-            self.message_log(self.tr('Address is complete'))
+            self.message_log("Adresse complète")
         return test
 
     def message_log(self, msg=""):

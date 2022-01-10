@@ -39,10 +39,10 @@ class ApiAddress:
 
         self.nam = NetworkAccessManager()
 
-        self.error_message_no_address_locate = self.tr("No address found at this coordinates")
-        self.error_message_no_address_found = self.tr("There is no address with this entry")
-        self.error_message_connection = self.tr('The connection failed')
-        self.success_message_connection = self.tr('Connection established')
+        self.error_message_no_address_locate = "Pas d'adresse trouvé avec ces coordonnées"
+        self.error_message_no_address_found = "Pas d'adresse avec ces critères"
+        self.error_message_connection = "La connexion a échouée"
+        self.success_message_connection = "Connexion établie"
 
     def tr(self, message):
         return QCoreApplication.translate('FrenchAddress', message)
