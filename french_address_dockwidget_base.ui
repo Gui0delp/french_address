@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>422</width>
-    <height>368</height>
+    <height>371</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,12 +23,11 @@
       <property name="font">
        <font>
         <pointsize>8</pointsize>
-        <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
       <property name="text">
-       <string>Result:</string>
+       <string>Résultat :</string>
       </property>
      </widget>
     </item>
@@ -47,7 +46,7 @@
        </size>
       </property>
       <property name="toolTip">
-       <string>Click on the map to capture an address </string>
+       <string>Cliquer sur la carte pour capturer l'adresse</string>
       </property>
       <property name="text">
        <string>...</string>
@@ -76,7 +75,6 @@
       </property>
       <property name="font">
        <font>
-        <family>MS Shell Dlg 2</family>
         <pointsize>8</pointsize>
        </font>
       </property>
@@ -100,12 +98,12 @@
       </attribute>
       <column>
        <property name="text">
-        <string>attribute</string>
+        <string>attributs</string>
        </property>
       </column>
       <column>
        <property name="text">
-        <string>value</string>
+        <string>valeurs</string>
        </property>
       </column>
      </widget>
@@ -131,7 +129,7 @@
        <set>Qt::TextEditorInteraction</set>
       </property>
       <property name="placeholderText">
-       <string>Your address here, like 8 Boulevard du Port 80000</string>
+       <string>Votre adresse ici, comme 8 Boulevard du Port 80000</string>
       </property>
      </widget>
     </item>
@@ -150,7 +148,7 @@
        </size>
       </property>
       <property name="toolTip">
-       <string>Copy result to clipboard</string>
+       <string>Copier dans le presse papier</string>
       </property>
       <property name="text">
        <string comment="Copy to clipboard" extracomment="Copy to clipboard">...</string>
@@ -160,7 +158,7 @@
     <item row="3" column="0" colspan="5">
      <widget class="QPushButton" name="pb_locate_search">
       <property name="text">
-       <string>Research</string>
+       <string>Rechercher</string>
       </property>
       <property name="default">
        <bool>true</bool>
@@ -174,12 +172,11 @@
      <widget class="QCheckBox" name="chb_view_details">
       <property name="font">
        <font>
-        <family>MS Shell Dlg 2</family>
         <pointsize>8</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>Show more details</string>
+       <string>Montrer plus de détail</string>
       </property>
      </widget>
     </item>
@@ -198,7 +195,7 @@
        </size>
       </property>
       <property name="toolTip">
-       <string>Show address on website 'adresse.data.gouv.fr'</string>
+       <string>Montre l'adresse sur le site 'adresse.data.gouv.fr'</string>
       </property>
       <property name="text">
        <string>...</string>
@@ -220,7 +217,7 @@
        </size>
       </property>
       <property name="toolTip">
-       <string>Result setting</string>
+       <string>Paramètre résultat</string>
       </property>
       <property name="text">
        <string>...</string>
