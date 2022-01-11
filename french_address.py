@@ -193,7 +193,7 @@ class FrenchAddress:
 
     def enable_disable_catch_tool(self):
         if not self.catch_tool_activate:
-            self.tool = CatchTool(self.iface, self.dockwidget, self)
+            self.tool = CatchTool(self.iface, self.dockwidget, self.widgetResultSetting, self)
             self.canvas.setMapTool(self.tool)
             self.canvas.setCursor(QCursor(QPixmap(self.catch_tool_icon)))
             self.catch_tool_activate = True
@@ -315,6 +315,7 @@ class FrenchAddress:
 
             if self.dockwidget is None:
                 self.dockwidget = FrenchAddressDockWidget()
+                self.widgetResultSetting = FrenchAddressWidgetResultSetting()
                 self.dockwidget.tw_details.setVisible(False)
                 self.coord = Coordinates(self.dockwidget)
                 self.address = Address(self.dockwidget)

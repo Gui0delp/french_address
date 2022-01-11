@@ -6,11 +6,12 @@ from .api_address import ApiAddress
 
 
 class CatchTool(QgsMapTool):
-    def __init__(self, iface, dialog, fr_address_instance):
+    def __init__(self, iface, dialog, setting_widget, fr_address_instance):
         QgsMapTool.__init__(self, iface.mapCanvas())
         self.canvas = iface.mapCanvas()
         self.iface = iface
         self.dialog = dialog
+        self.setting_widget = setting_widget
         self.fr_address_instance = fr_address_instance
         self.coord = Coordinates(self.dialog)
         self.api_address = ApiAddress(self.dialog)
@@ -37,7 +38,8 @@ class CatchTool(QgsMapTool):
                 response_properties = self.api_address.take_reverse_response_properties()
                 response_coordinates = self.api_address.take_reverse_response_coordinates()
                 response_properties.update(response_coordinates)
-                self.dialog.le_input_address.setText(response_label)
+                response = self.choose_results(response_label, response_properties)
+                self.dialog.le_input_address.setText(response)
                 self.api_address.populate_table_widget(response_properties)
             else:
                 message = "Pas d'adresse trouvé avec ces coordonnées"
@@ -63,6 +65,23 @@ class CatchTool(QgsMapTool):
         self.dialog.pb_locate_search.setEnabled(True)
         self.fr_address_instance.catch_tool_activate = False
         self.deactivated.emit()
+
+    def choose_results(self, response_label, response_properties):
+        response = response_label
+
+        if self.setting_widget.cbox_id.isChecked():
+            response = response + ' ' + response_properties['id']
+
+        if self.setting_widget.cbox_postcode.isChecked():
+            response = response + ' ' + response_properties['postcode']
+
+        if self.setting_widget.cbox_citycode.isChecked():
+            response = response + ' ' + response_properties['citycode']
+
+        if self.setting_widget.cbox_type.isChecked():
+            response = response + ' ' + response_properties['type']
+
+        return response
 
     def message_log(self, msg=""):
         QgsMessageLog.logMessage('{} {}'.format(self.__class__.__name__, msg), 'FrenchAddress', Qgis.Info)
