@@ -69,17 +69,17 @@ class CatchTool(QgsMapTool):
     def choose_results(self, response_label, response_properties):
         response = response_label
 
-        if self.setting_widget.cbox_id.isChecked():
-            response = response + ' ' + response_properties['id']
-
         if self.setting_widget.cbox_postcode.isChecked():
             response = response + ' ' + response_properties['postcode']
 
         if self.setting_widget.cbox_citycode.isChecked():
             response = response + ' ' + response_properties['citycode']
 
+        if self.setting_widget.cbox_id.isChecked():
+            response = response + ' ' + response_properties['id']
+
         if self.setting_widget.cbox_type.isChecked():
-            response = response + ' ' + response_properties['type']
+            response = response + ' ' + response_properties['context']
 
         return response
 
