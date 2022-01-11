@@ -151,8 +151,8 @@ class ApiAddress:
         self.dialog.tw_details.clear()
         self.dialog.tw_details.setRowCount(0)
         self.dialog.tw_details.setColumnCount(2)
-        head_attribute = self.tr("attribute")
-        head_value = self.tr("value")
+        head_attribute = "attributs"
+        head_value = "valeurs"
         self.dialog.tw_details.setHorizontalHeaderItem(0, QTableWidgetItem(head_attribute))
         self.dialog.tw_details.setHorizontalHeaderItem(1, QTableWidgetItem(head_value))
 
