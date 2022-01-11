@@ -37,11 +37,6 @@ from .french_address_dockwidget import FrenchAddressDockWidget
 from .french_address_widget_result_setting import FrenchAddressWidgetResultSetting
 
 
-# TODO: choisir plus l'attribut 'context' pour le plugin
-# TODO: Modifier l'ordre code postcode / citycode / id / context
-# TODO: problème traduction dans le tableau 'Montrer plus de détails'
-# TODO: Revoir l'activation du setting panel 'show'
-# TODO: Metadata.txt changer la note 1.3.0
 class FrenchAddress:
     """QGIS Plugin Implementation."""
 
