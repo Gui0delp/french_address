@@ -10,6 +10,8 @@ from qgis.PyQt.QtWidgets import QTableWidgetItem
 from PyQt5.Qt import QApplication, QUrl, QDesktopServices
 from qgis.PyQt.QtCore import QTranslator, QCoreApplication
 
+from .networkaccessmanager import NetworkAccessManager, RequestsException
+
 
 class ApiAddress:
     """ This class manage the methods for api
@@ -18,13 +20,15 @@ class ApiAddress:
     def __init__(self, dialog=None):
         self.dialog = dialog
         self.zoom_to_map = 19
-        self.reverse_url = "https://api-adresse.data.gouv.fr/reverse/"
-        self.search_url = "https://api-adresse.data.gouv.fr/search/"
-        self.map_url = "https://adresse.data.gouv.fr/base-adresse-nationale/"
+        self.REVERSE_URL = "https://api-adresse.data.gouv.fr/reverse/"
+        self.SEARCH_URL = "https://api-adresse.data.gouv.fr/search/"
+        self.MAP_URL = "https://adresse.data.gouv.fr/base-adresse-nationale/"
+        self.USER_AGENT = b'Mozilla/5.0 QGIS LocatorFilter'
+        self.headers = {b'User-Agent': self.USER_AGENT}
         self.url = ""
-        self.response = ""
+        self.content = ""
         self.json_data = ""
-        self.search_label = ""
+        self.search_coordinates = ""
         self.my_context = ssl._create_unverified_context()
         self.latitude = ""
         self.longitude = ""
@@ -33,10 +37,12 @@ class ApiAddress:
         self.reverse_properties = {}
         self.reverse_coordinates = {}
 
-        self.error_message_no_address_locate = self.tr("No address found at this coordinates")
-        self.error_message_no_address_found = self.tr("There is no address with this entry")
-        self.error_message_connection = self.tr('The connection failed')
-        self.success_message_connection = self.tr('Connection established')
+        self.nam = NetworkAccessManager()
+
+        self.error_message_no_address_locate = "Pas d'adresse trouvé avec ces coordonnées"
+        self.error_message_no_address_found = "Pas d'adresse avec ces critères"
+        self.error_message_connection = "La connexion a échouée"
+        self.success_message_connection = "Connexion établie"
 
     def tr(self, message):
         return QCoreApplication.translate('FrenchAddress', message)
@@ -45,7 +51,7 @@ class ApiAddress:
         """Set the reverse url with the longitude and latitude"""
         lon = str(longitude)
         lat = str(latitude)
-        self.url = self.reverse_url + '?lon=' + lon + '&lat=' + lat
+        self.url = self.REVERSE_URL + '?lon=' + lon + '&lat=' + lat
         return self.url
 
     def set_map_url(self, longitude_house, latitude_house, id_house):
@@ -53,7 +59,7 @@ class ApiAddress:
         lon = str(longitude_house)
         lat = str(latitude_house)
         id = id_house
-        url_for_map = self.map_url + str(id) + '#' + str(self.zoom_to_map) + '/' + lat + '/' + lon
+        url_for_map = self.MAP_URL + str(id) + '#' + str(self.zoom_to_map) + '/' + lat + '/' + lon
         return url_for_map
 
     def open_map_url(self, url_for_map):
@@ -63,7 +69,9 @@ class ApiAddress:
     def test_request(self):
         """test if the request is OK"""
         try:
-            urlopen(self.url, context=self.my_context)
+            headers = {b'User-Agent': self.USER_AGENT}
+            (response, content) = self.nam.request(self.url, headers=headers, blocking=True)
+            #urlopen(self.url, context=self.my_context)
             self.message_log(f'{self.success_message_connection}: {self.url}')
             return True
         except:
@@ -72,12 +80,14 @@ class ApiAddress:
 
     def set_request(self):
         """Open the url"""
-        self.response = urlopen(self.url, context=self.my_context)
-        return self.response
+        headers = {b'User-Agent': self.USER_AGENT}
+        (response, content) = self.nam.request(self.url, headers=headers, blocking=True)
+        self.content = content
+        return self.content
 
     def decode_response(self):
         """decode with the utf-8 encodage, the response"""
-        self.json_data = self.response.read().decode('utf-8')
+        self.json_data = self.content.decode('utf-8')
         return self.json_data
 
     def json_to_dictionnary(self):
@@ -120,7 +130,7 @@ class ApiAddress:
 
         name_parse = urllib.parse.quote(name_road, safe='\'')
 
-        self.url = self.search_url \
+        self.url = self.SEARCH_URL \
                                     + '?q=' + house_number \
                                     + '%20' + name_parse \
                                     + post_code \
@@ -128,22 +138,21 @@ class ApiAddress:
                                     + '&autocomplete=1'
         return self.url
 
-    def take_search_response_label(self):
-        """Return the label of the request"""
+    def take_search_response_coordinates(self):
+        """Return the coordinates of the request"""
         try:
-            self.search_label = \
-            self.dictionnary_data['features'][0]['geometry']['coordinates']
+            self.search_coordinates = self.dictionnary_data['features'][0]['geometry']['coordinates']
         except:
             self.message_log(self.error_message_no_address_found)
 
-        return self.search_label
+        return self.search_coordinates
 
     def initialize_table_widget(self):
         self.dialog.tw_details.clear()
         self.dialog.tw_details.setRowCount(0)
         self.dialog.tw_details.setColumnCount(2)
-        head_attribute = self.tr("attribute")
-        head_value = self.tr("value")
+        head_attribute = "attributs"
+        head_value = "valeurs"
         self.dialog.tw_details.setHorizontalHeaderItem(0, QTableWidgetItem(head_attribute))
         self.dialog.tw_details.setHorizontalHeaderItem(1, QTableWidgetItem(head_value))
 

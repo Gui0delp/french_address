@@ -7,18 +7,18 @@ name=French Address
 qgisMinimumVersion=3.4
 description=Research and location based on the <a href="https://geo.api.gouv.fr/adresse">API BAN</a> provided by the French government .
 description[fr]=Recherche et localisation basées sur <a href="https://geo.api.gouv.fr/adresse">l'API BAN</a> fournie par le gouvernement français.
-version=1.2
+version=1.3.0
 author=Guillaume DELPLANQUE
 email=delpro.guillaume@gmail.com
 
 about=For research an address, simply write the desired address in the plugin's research bar.
     For best results, enter a house number, street name, and zip code.
     You can also retrieve the address based on the coordinates by activating the tool "Click on the map to capture an address".
-    The cursor will change to a cross and you can start typing.
+    The cursor will change to a cross and you can start catching.
 about[fr]=Pour rechercher une adresse, il suffit d'écrire l'adresse souhaitée dans la barre de recherche du plugin.
     Pour de meilleurs résultats, entrez un numéro de maison, un nom de rue et le code postal.
-    Vous pouvez également récupérez l'adresse en fonction des coordonnées en activant l'outil' "Cliquez sur la carte pour capturer une adresse".
-    Le curseur se changera en croix et vous pourrez commencer la saisie.
+    Vous pouvez également récupérez l'adresse en fonction des coordonnées en activant l'outil' "Cliquez sur la carte pour capturer l'adresse".
+    Le curseur se changera en croix et vous pourrez commencer la capture.
 
 tracker=https://github.com/Gui0delp/french_address/issues
 repository=https://github.com/Gui0delp/french_address
@@ -28,10 +28,15 @@ repository=https://github.com/Gui0delp/french_address
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=1.2
+changelog=1.3.0
+    - added setting panel for choose result format
+    1.2.0
+    - refact api address module
+    - add network access manager by Alessandro Pasotti
+    1.1.1
     - fix bug when deactivate the catch tool
     - updated translate file for French language
-    1.1
+    1.1.0
     - now you can view more details from result
     - redesign of the capture tool
     - add tool to show address on the web browser
