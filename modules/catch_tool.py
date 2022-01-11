@@ -42,7 +42,7 @@ class CatchTool(QgsMapTool):
                 self.dialog.le_input_address.setText(response)
                 self.api_address.populate_table_widget(response_properties)
             else:
-                message = "Pas d'adresse trouvé avec ces coordonnées"
+                message = " pas d'adresse trouvé avec ces coordonnées"
                 message_error = message + f'EPSG:4326 lon,lat = {self.coord.longitude},{self.coord.latitude}'
                 self.message_log(message_error)
                 self.iface.messageBar().pushMessage('Warning',
